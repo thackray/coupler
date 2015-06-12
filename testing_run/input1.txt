@@ -1,1 +1,0 @@
-This is the input data for dummy model 1.
