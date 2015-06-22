@@ -13,24 +13,24 @@ mkdir run/
 set rundir=$workingdir/verification/global_pcb_llc90/run
 
 #6.1 Copy first batch of files
-#Copy these folders to verification/:
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_cs32 .
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_input_fields .
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90/input .
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90/input.core2 .
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90/input.ecco_v4 .
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90/input.ecmwf .
-cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90/input_itXX .
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_cs32 ../.
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_input_fields ../.
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/input .
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/input.core2 .
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/input.ecco_v4 .
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/input.ecmwf .
+cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/input_itXX .
 
 #Go into the input_itXX/ directory and update the file paths:
 set dirInputFields=$rundir/verification/global_oce_input_fields
-set dirLlc90=/home/geos_harvard/yanxu/MITgcm/verification/global_ocea_llc90
+set dirLlc90=/home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90
 
 #Execute this command in your run/ directory.
 cd $rundir
-csh #(note: this command opens a c-shell)
-../input_itXX/prepare_run.sh
-exit #(note: this closes the c-shell)
+cp /home/thackray/coupler/prepare_run ../input_itXX/prepare_run
+cp /home/thackray/coupler/prepare_run_input ../input/prepare_run
+cp /home/thackray/coupler/prepare_run_ecco_v4 ../input.ecco_v4/prepare_run
+./../input_itXX/prepare_run
 
 #6.2 Link forcing files to your run folder
 #Go to your run/ folder:
@@ -62,4 +62,5 @@ mv wt_* xx_* control/
 #6.6 data* files
 #If you're running the PCB simulation, copy data* files to your run/ directory from here:
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/data* .
- 
+cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/mitgcmuv .
+cp /home/thackray/coupler/qsub_itXX.csh .
