@@ -32,10 +32,13 @@ function regrid_evas_llc2ll( ocnpath, ocndiag, time_llc90, outfile_evas, LPLOT )
 % Helen M. Amos (hamos@hsph.harvard.edu)
 %=================================================================
 
+% close all open figure windows
+close all;
+
 % add gcmfaces library
 addpath(genpath('/home/geos_harvard/helen/MATLAB/gcmfaces/gcmfaces'));
 
-% read evasion from MITgcm (units?) 
+% read evasion from MITgcm (mol/m2/s) 
 disp(' '); disp('Reading MITgcm ECCOv4 ocean evasion...')
 ocnevas_llc90 = rdmds( [ocnpath, ocndiag], time_llc90 );
 
@@ -70,6 +73,9 @@ mygrid_refgrid = mygrid;
 disp(' '); disp('Loading GEOS-Chem grid information...')
 GC_gridinfo
 
+% convert [0,360] to [-180,180]
+lon_gc = -180 + lon_gc;
+
 % prepare mygrid for lat-lon with no mask
 mygrid_latlon.nFaces     = 1;
 mygrid_latlon.XC         = gcmfaces({lon_gc}); 
@@ -100,6 +106,19 @@ ocnevas_latlon(mytri.kk) = vecfld;                        % fill with data
 ocnevas_latlon           = convert2array(ocnevas_latlon); % convert data to array
 
 %-----------------------------------------------------------------
+% Visual check that regridding didn't produce garbarge
+%-----------------------------------------------------------------
+
+if strcmp(LPLOT, 'TRUE')
+  FLD = ocnevas_latlon{1};
+  figure(1); 
+  set(gca,'FontSize',14);
+  pcolor(lon_gc,lat_gc,FLD); shading flat;
+  colorbar;
+  title('OCEAN EVASION: llc90 --> latlon') ;
+end
+
+%-----------------------------------------------------------------
 % Write to netCDF for GEOS-Chem
 %-----------------------------------------------------------------
     
@@ -107,8 +126,6 @@ ocnevas_latlon           = convert2array(ocnevas_latlon); % convert data to arra
 % corner should start at [-180,-90]
 lat_nc = lat_gc_vec; 
 lon_nc = lon_gc_vec - 180.;  % convert [0,360] to [-180,180]
-
-lon_nc
 
 % create the netcdf file
 nc_filename = ( outfile_evas );
@@ -157,22 +174,3 @@ netcdf.putVar( ncid, evas_varid, ocnevas_latlon{1} );
     
 % close the file
 netcdf.close( ncid );
-
-%-----------------------------------------------------------------
-% Visual check that regridding didn't produce garbarge
-%-----------------------------------------------------------------
-
-if strcmp(LPLOT, 'TRUE')
-  FLD = ocnevas_latlon{1};
-  figure(1); 
-  set(gca,'FontSize',14);
-  pcolor(lon_gc,lat_gc,FLD); 
-  shading flat; 
-  colorbar;
-  title('OCEAN EVASION: llc90 --> latlon') ;
-
-  figure(2);
-  title('OCEAN EVASION: llc90 --> latlon, non-zero elements') ;
-  spy(FLD)
-end
-
