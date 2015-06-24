@@ -31,14 +31,18 @@ def cd(destination):
 def submit(scriptname):
     return os.system('qsub '+scriptname)
 
-def format_time(dtime,out_type='str'):
+def format_time(dtime,out_type='str',abststart=None):
     """Change the time to the format that a particular model likes."""
     if out_type.lower() in ['str','string']:
-        return datetime.whatever(dtime,formt)
-    if out_type.lower() in ['gc','geos-chem', 'gchem', 'geoschem']:
-        return whatever
-    if out_type.lower() in ['mg', 'mitgcm', 'mit-gcm', 'mgcm']:
-        return whatever
+        return dtime.strftime()
+    elif out_type.lower() in ['gc','geos-chem', 'gchem', 'geoschem']:
+        return dtime.strftime('%Y%m%d %H%M%S')
+    elif out_type.lower() in ['mg', 'mitgcm', 'mit-gcm', 'mgcm']:
+        assert asbstart, "must give absolute start date and time"
+        hours = int((dtime-abststart).total_seconds()/3600)
+        return '%.10i'%hours
+    elif out_type.lower() in ['restart']:
+        return dtime.strftime('%Y%m%d%H')
 
 
 class FileTemplate(object):
@@ -121,17 +125,24 @@ class Model(object):
         self.out_for = modelinfo['out_for']
         self.runscript = modelinfo['runscript']
         self.input_files = modelinfo['input_files']
+        self.share_script = modelinfo['share_script']
+        self.mat_share_script = modelinfo['mat_share_script']
+        self.mat_output_files = modelinfo['mat_output_files']
+        self.rundirname = modelinfo['rundirname']
         self.executable = modelinfo['executable']
+        self.abststart = None
 
     def setup(self, tstart, tend):
         """Do the general setup procedures. Procedures speific to the 
         individual models should not be defined here.
         """
-        self.rundir = os.path.join(self.rootdir,
-                                   str(tstart.date())+str(tstart.hour))
+        self.rundir = os.path.join(self.rootdir,self.rundirname))
+        if not self.abststart:
+            self.abststart = tstart
         self.tstart = tstart
         self.tend = tend
-        os.mkdir(self.rundir)
+        if not os.path.exists(self.rundir):
+            os.mkdir(self.rundir)
         for fil in self.input_files:
             self._make_input_file(fil,self.rundir)
         cp(self.executable,self.rundir)
@@ -177,7 +188,26 @@ class Model(object):
         F.fill_template(fill_dict)
         F.write()
         return
-         
+
+    def _make_shared_files(self,):
+        "Make file(s) to be traded with other models"
+        for for_model in self.out_for:
+            dirname = '%s_to_%s'%(self.name,for_model)
+            localdirname = os.path.join(self.rundir,dirname)
+            if not os.path.exists(localdirname):
+                os.mkdir(localdirname)
+            self._make_from_template(self.share_script,
+                                     os.path.join(self.rundir,
+                                                  self.share_script),
+                                     self._make_shared_dict())
+            cp(self.mat_share_script, 
+               os.path.join(self.rundir,self.mat_share_script))
+            submit(os.path.join(self.rundir,self.mat_share_script))
+            for outputname in self.mat_output_files: 
+                cp(outputname,os.path.join(localdirname,outputname))
+
+        return
+
     def go(self,):
         """Run the model."""
         cd(self.rundir)
@@ -192,28 +222,32 @@ class GEOSChem(Model):
        - modelinfo: model info dictionary for Model object.
     
     Methods:
-       - _make_shared_files: send outputs for other models
+       - _make_shared_dict: used by Model's _make_shared_files
        - _make_input_file: make filled input.geos file
        - _make_runscript: make runscript for GEOSChem
     """
 
-    def _make_shared_files(self,):
-        for for_model in self.out_for:
-            dirname = '%s_to_%s'%(self.name,for_model)
-            localdirname = os.path.join(self.rundir,dirname)
-            os.mkdir(localdirname)
-        # needs to make the dir name_to_for_model, fill it
-        pass
+    def _make_shared_dict(self,):
+        "Make fill_dict for shared_script"
+        fill_dict = {'@GCPATH':self.rundir,
+                     '@GCFILE':self.bpch_name,
+                     }
+                     
+        return fill_dict
 
     def _make_input_file(self, template, destination):
         fill_dict = {'@STARTTIME':format_time(self.tstart,'GC'),
                      '@ENDTIME':format_time(self,tend,'GC'),
+                     '@BPCHNAME':self.bpch_name,
+                     '@RESTARTTIME':format_time(self.tstart,'restart')
                      }
         self._make_from_template(template, destination, fill_dict)
         return
 
     def _make_runscript(self, template, destination):
-        fill_dict = {'@RUNDIR':self.rundir}
+        fill_dict = {'@RUNDIR':self.rundir,
+                     '@EXECUTABLE':self.executable,
+                     }
         self._make_from_template(template, destination, fill_dict)
         return
 
@@ -225,29 +259,40 @@ class MITgcm(Model):
        - modelinfo: model info dictionary for Model object.
     
     Methods:
-       - _make_shared_files: send outputs for other models
+       - _make_shared_dict: used by Model's _make_shared_files
        - _make_input_file:
        - _make_runscript: make runscript for MITgcm
     """
 
-    def _make_shared_files(self,):
-        for for_model in self.out_for:
-            dirname = '%s_to_%s'%(self.name,for_model)
-            localdirname = os.path.join(self.rundir,dirname)
-            os.mkdir(localdirname)
-        # needs to make the dir name_to_for_model, fill it
-        return
+    def _make_shared_dict(self,):
+        "Make fill_dict for shared_script"
+        fill_dict = {'@OCNPATH':self.rundir,
+                     '@OCNDIAG':EVASIONDIAG,
+                     '@LLC90TIME':self.format_time(self.tend,'MG',
+                                                   self.abststart)
+                     }
+                     
+        return fill_dict
 
     def _make_input_file(self, template, destination):
         fill_dict = {'@RUNDIR':self.rundir,
-                     '@STARTTIME':format_time(self.tstart,'MG'),
-                     '@ENDTIME':format_time(self.tend,'MG'),
+                     '@STARTTIME':str(int(format_time(self.tstart,
+                                                  'MG',self.abststart))),
+                     '@TIMESTEP':str(int(format_time(self.tend,
+                                                 'MG',self.tstart))),
                      }
+        if self.tstart==self.abststart:
+            fill_dict['@PICKUPSUFF'] = '#'
+        else:
+            fill_dict['@PICKUPSUFF'] = "pickupSuff='%s'"%\
+                format_time(self.tstart, 'MG', self.abststart)
         self._make_from_template(template, destination, fill_dict)
         return
 
     def _make_runscript(self, template, destination):
-        fill_dict = {'@RUNDIR':self.rundir}
+        fill_dict = {'@RUNDIR':self.rundir,
+                     '@EXECUTABLE':self.executable,
+                     }
         self._make_from_template(template, destination, fill_dict)
         return
  
