@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
-
-rundir=/home/thackray/coupler/testing_run/verification/global_pcb_llc90/run
+workingdir=/path/to/here
+rundir=$workingdir/MITgcm/verification/global_pcb_llc90/run
 dirList="../input ../../global_oce_input_fields/llc90 ../../global_oce_input_fields/llc90_fields ../../global_oce_input_fields/llc90_runoff"
 
 for fromDir in $dirList

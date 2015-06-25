@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
-
-rundir=/home/thackray/coupler/testing_run/verification/global_pcb_llc90/run
+workingdir=/path/to/here
+rundir=$workingdir/MITgcm/verification/global_pcb_llc90/run
 dirList="../input.ecco_v4 ../../global_oce_input_fields/ecmwf ../../global_oce_input_fields/ecco_v4"
 
 for fromDir in $dirList

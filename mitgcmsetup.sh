@@ -1,16 +1,18 @@
 #!/bin/csh
 
-set workingdir=/home/thackray/coupler/testing_run
-
+set workingdir=/path/to/this/dir
+mkdir $workingdir
 #setup script for mitgcm runs
-cd $workingdir
+set gcmdir=$workingdir/MITgcm
+mkdir $gcmdir
+cd $gcmdir
 mkdir verification/
 cd verification/
 
 mkdir global_pcb_llc90/ #(if you are running the PCB package)
 cd global_pcb_llc90/
 mkdir run/
-set rundir=$workingdir/verification/global_pcb_llc90/run
+set rundir=$gcmdir/verification/global_pcb_llc90/run
 
 #6.1 Copy first batch of files
 cp -r /home/geos_harvard/yanxu/MITgcm/verification/global_oce_cs32 ../.
@@ -27,9 +29,9 @@ set dirLlc90=/home/geos_harvard/yanxu/MITgcm/verification/global_oce_llc90
 
 #Execute this command in your run/ directory.
 cd $rundir
-cp /home/thackray/coupler/prepare_run ../input_itXX/prepare_run
-cp /home/thackray/coupler/prepare_run_input ../input/prepare_run
-cp /home/thackray/coupler/prepare_run_ecco_v4 ../input.ecco_v4/prepare_run
+cp $workingdir/prepare_run ../input_itXX/prepare_run
+cp $workingdir/prepare_run_input ../input/prepare_run
+cp $workingdir/prepare_run_ecco_v4 ../input.ecco_v4/prepare_run
 ./../input_itXX/prepare_run
 
 #6.2 Link forcing files to your run folder
@@ -62,5 +64,6 @@ mv wt_* xx_* control/
 #6.6 data* files
 #If you're running the PCB simulation, copy data* files to your run/ directory from here:
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/data* .
+cp -r /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB .
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/mitgcmuv .
-cp /home/thackray/coupler/qsub_itXX.csh .
+cp $workingdir/qsub_itXX.csh .
