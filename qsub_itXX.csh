@@ -1,6 +1,5 @@
 #!/bin/csh
 #
-##PBS -l nodes=96:nehalem
 #PBS -l nodes=13:sandy
 #PBS -N test_mitgcm
 #PBS -j oe
