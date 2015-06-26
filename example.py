@@ -11,7 +11,7 @@ GCinfo = {'Name':'GEOS-Chem',
           'share_script':'geostogcm.m',
           'mat_share_script':'sendgeos.sh',
           'mat_output_files':['evasion_latlon.nc'],
-          'rundirname':['GEOS-Chem/run']
+          'rundirname':['GEOS-Chem/run'],
           'executable':'geos',
           }
 
@@ -22,7 +22,7 @@ MGinfo = {'Name':'MITgcm',
           'error_tag':'MGerror',
           'in_from':['GEOS-Chem'],
           'out_for':['GEOS-Chem'],
-          'runscript':'qsub_itXX.sh',
+          'runscript':'qsub_itXX.csh',
           'input_files':['data',],
           'share_script':'gcmtogeos.m',
           'mat_share_script':'sendgcm.sh',
@@ -37,7 +37,7 @@ from coupler import Coupler
 from datetime import datetime
 
 M1 = GEOSChem(GCinfo)
-M2 = MITgcm(MGinfo))
+M2 = MITgcm(MGinfo)
 start_time, end_time = datetime(2000,1,1,0),datetime(2000,3,2,0)
 step = 30*24
 coupled = Coupler(start_time, end_time, step, model_objs=[M1,M2], 
