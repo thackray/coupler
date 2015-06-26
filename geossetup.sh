@@ -1,7 +1,7 @@
 #!/bin/csh
 
 set workingdir=/path/to/here
-set rundir=$workingdir/GEOS-Chem
+set rundir=$workingdir/GEOS-Chem/run
 mkdir $rundir
 cd $rundir
 
