@@ -1,0 +1,53 @@
+Model Coupler README
+
+The coupler code is broken into a few tiers:
+    
+    1. Top tier: coupler.py
+    This module handles all the abstracted functionality of the coupling,
+    e.g. "run", "setup" and things like that in a very general sense.
+    Users shouldn't have to fiddle with this.
+
+    2. Second tier: models.py
+    This module has both the abstract parent class "Model" and the children
+    classes like "MITgcm" and "GEOSChem" which define the behaviors and 
+    particulars of those specific models.
+    
+    Something that users might want to edit in this module would be the fill_dict
+    definitions in the specific model classes. For example if a new template tag
+    needed to be added to an input file to define the location of some data, the
+    user might add the line
+    	 '@DATALOCATION':'/path/to/some/data',
+    to the fill_dict definition in the method _make_input_file in one of the 
+    specific model classes.
+
+    3. Third tier: python runscript (e.g. testing.py)
+    In these python scripts, the above modules are called and instances of the
+    classes are used to perform the coupled run.
+    Important thing for users to define in these:
+    	      info dictionaries: filled with names and paths and info
+	      types of models being used
+	      start time, end time, time step (in hours)
+
+    4. Lowest tier: other scripts
+    These scripts are the ones used by the coupler to do all the work,
+    and can be freely edited by users to do what they do better without touching 
+    the python modules. Their templates are pointed to in the python runscripts 
+    in the model info dictionaries and use a tagging system to be filled 
+    appropriately. In the script templates, tags are, by convention, started with
+    the symbol '@' and all caps. These tags will be replaced as the coupling code
+    fills in the templates.
+
+
+
+Steps to run:
+1. Clone this repository
+2. Change mitgcmsetup.sh to have the cloned directory as 'workingdir'
+   (and change prepare_run_ecco_v4 and prepare_run_input) (Sorry, will fix!)
+3. Run mitgcmsetup.sh (ssh to fs03 first, some big files get moved)
+4. Change geossetup.sh to have the cloned directory as 'workingdir'
+5. Run geossetup.sh
+6. Change 'rootdir' path to cloned directory
+7. python example.py
+If these steps work, you should be able to make scripts like example.py which
+will do the running that you want them to, if you also tweak the model rundirs
+appropriately (give them the initial conditions they need, etc.)

@@ -1,6 +1,6 @@
 
 GCinfo = {'Name':'GEOS-Chem',
-          'rootdir':'/path/to/here/GEOS-Chem',
+          'rootdir':'/path/to/here',
           'done_tag':'GCdone',
           'running_tag':'GCrunning',
           'error_tag':'GCerror',
@@ -16,7 +16,7 @@ GCinfo = {'Name':'GEOS-Chem',
           }
 
 MGinfo = {'Name':'MITgcm',
-          'rootdir':'/path/to/here/MITgcm',
+          'rootdir':'/path/to/here',
           'done_tag':'MGdone',
           'running_tag':'MGrunning',
           'error_tag':'MGerror',
