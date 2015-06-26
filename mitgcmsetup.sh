@@ -1,7 +1,6 @@
 #!/bin/csh
 
 set workingdir=/path/to/this/dir
-mkdir $workingdir
 #setup script for mitgcm runs
 set gcmdir=$workingdir/MITgcm
 mkdir $gcmdir
