@@ -1,38 +1,34 @@
-gm
-GEOS-CHEM SIMULATION v8-03-02: POPS simulation
+GEOS-CHEM SIMULATION v9-01-03: POPS simulation
 ------------------------+------------------------------------------------------
 %%% SIMULATION MENU %%% :
-%Start YYYYMMDD, HHMMSS  : 20050101 000000
-%End   YYYYMMDD, HHMMSS  : 20090101 000000
 Start YYYYMMDD, HHMMSS  : @STARTTIME
 End   YYYYMMDD, HHMMSS  : @ENDTIME
 Run directory           : ./
-%Input restart file      : restart.pops.YYYYMMDDhh
 Input restart file      : restart.pops.@RESTARTTIME
 Make new restart file?  : T
 Output restart file(s)  : restart.pops.YYYYMMDDhh
-Root data directory     : /net/fs03/d0/geosdata/data/GEOS_4x5/
+Root data directory     : /net/geoschem/data/gcgrid/gcdata/GEOS_4x5/
  => GCAP       subdir   : AGRID/YYYY/MM/
- => GEOS-3     subdir   : GEOS_3/YYYY/MM/
  => GEOS-4     subdir   : GEOS_4_v4/YYYY/MM/
  => GEOS-5     subdir   : GEOS_5/YYYY/MM/
-Dir w/ 1x1 emissions etc: /net/fs03/d0/geosdata/data/GEOS_1x1/
+ => GEOS-5.7.x subdir   : GEOS_5.7/YYYY/MM/
+ => MERRA      subdir   : MERRA/YYYY/MM/
+Dir w/ 1x1 emissions etc: /net/geoschem/data/gcgrid/gcdata/GEOS_1x1/
 Temporary directory     : /home/clf/TEMP
 Unzip met fields?       : F
 Wait for met fields?    : F
 Use variable tropopause?: T
-Use LINOZ strat chem?   : F
 Global offsets I0, J0   : 0 0
 ------------------------+------------------------------------------------------
 %%% TRACER MENU %%%     : 
 Type of simulation      : 14
 Number of Tracers       : 5                    
 Tracer Entries -------> : TR#   Name      g/mole  
-Tracer #1               :   1   POPG        252.31
-Tracer #2               :   2   POPPOCPO    252.31
-Tracer #3               :   3   POPPOCPI    252.31
-Tracer #4               :   4   POPPBCPO    252.31
-Tracer #5               :   5   POPPBCPI    252.31
+Tracer #1               :   1   POPG        257.54
+Tracer #2               :   2   POPPOCPO    257.54
+Tracer #3               :   3   POPPOCPI    257.54
+Tracer #4               :   4   POPPBCPO    257.54
+Tracer #5               :   5   POPPBCPI    257.54
 ------------------------+------------------------------------------------------
 %%% TRANSPORT MENU %%%  :
 Turn on Transport       : T
@@ -40,31 +36,31 @@ Turn on Transport       : T
  => Fill Negative Values: T 
  => IORD, JORD, KORD    : 3  3  7
 Transport Timestep [min]: 30   
-Use strat O3/NOy BC's   : F
 ------------------------+------------------------------------------------------
 %%% CONVECTION MENU %%% :
 Turn on Cloud Conv?     : T
 Turn on PBL Mixing?     : T
- => Non-local PBL?      : F
+ => Use non-local PBL?  : F
 Convect Timestep (min)  : 30
 ------------------------+------------------------------------------------------
 %%% EMISSIONS MENU %%%  :
 Turn on emissions?      : T
 Emiss timestep (min)    : 60
 Include anthro emiss?   : T
- => Scale 1985 to year  : -1
+ => Scale from 1985 to  : -1
  => Use EMEP emissions? : F
  => Use BRAVO emissions?: F
  => Use EDGAR emissions?: F
  => Use STREETS emiss?  : F
  => Use CAC emissions?  : F
  => Use NEI2005 emiss?  : F
+ => Use RETRO emiss?    : F
 Use EPA/NEI99 (anth+bf)?: F
     w/ ICARTT modif.?   : F
     w/ VISTAS NOx emis? : F
 Include biofuel emiss?  : F
 Include biogenic emiss? : F
- => Use MEGAN inventory?: F
+ => Use MEGAN inventory?: T
  => Use PCEEA model?    : F
  => Use MEGAN for MONO? : F
  => Isoprene scaling    : 1
@@ -76,15 +72,14 @@ Include biomass emiss?  : F
     => 8-day GFED2?     : F 
     => 3-hr GFED2?      : F
     => synoptic GFED2?  : F
+ => Use GFED3 biomass?  :---
+    => monthly GFED3?   : F 
+    => daily GFED3?     : F 
+    => 3-hr GFED3?      : F
 Individual NOx sources  :---
  => Use aircraft NOx?   : F
  => Use lightning NOx?  : F
-    => Scale glb flrate?: F
-    => OTD reg redist?  : F
-    => OTD local redist?: F
-    => Use CTH param?   : F
-    => Use MFLUX param? : F
-    => Use PRECON param?: F
+    => Spat-seas constr?: F
  => Use soil NOx        : F
  => Use fertilizer NOx  : F
 NOx scaling             : 1
@@ -96,7 +91,14 @@ Use ship SO2 emissions? :---
  => ship SO2 Arctas ?   : F
 Use COOKE BC/OC (N. Am.): F   
 Use AVHRR-derived LAI?  : F
-Use MODIS-derived LAI?  : F
+Use MODIS-derived LAI?  : T
+Use historical emiss?   : F
+ => What decade?        : 2000
+Bromine switches        :---
+ => Use Warwick VSLS?   : F
+ => Use seasalt Br2?    : F
+ => 1ppt MBL BRO Sim.?  : F
+ => Bromine scaling     : 1
 ------------------------+------------------------------------------------------
 %%% AEROSOL MENU %%%    :
 Online SULFATE AEROSOLS : F
@@ -106,23 +108,28 @@ Online 2dy ORG AEROSOLS : F
 Online DUST    AEROSOLS : F
  => Use DEAD emissions? : F
 Online SEASALT AEROSOLS : F
- -- SALA radius bin [um]: 0.1  0.5
- -- SALC radius bin [um]: 0.5  4.0
+ -- SALA radius bin [um]: 0.01 0.5
+ -- SALC radius bin [um]: 0.5  8.0
 Online dicarb. chem.    : F
 ------------------------+------------------------------------------------------
 %%% POPS MENU %%%       :
-POP type [PHE,PYR,BAP]  : PYR
+PAH simulation?         : F
+PCB simulation?         : T
+POP type [PHE, PCB028]  : PCB028
+Surface fluxes?         : T
+Surface restart file    : surf.pops.YYYYMMDDhh
 Dummy logical           : T
-POPs emiss file         : /home/thackray/GEOS-Chem/PCM_emis_bap/emis_bap/bap_emis
-POP_XMW                 : 252d-3
-POP_KOA                 : 223872113857
-POP_KBC                 : 3.24d13
-POP_K_POPG_OH           : 1.3d-10
-POP_K_POPG_O3A          : 5.5d-3
-POP_K_POPG_O3B          : 2.8d15
-POP_HSTAR               : 2096
-POP_DEL_H               : -99933
-POP_DEL_Hw              : -4555
+POPs emiss file         : /home/clf/Geos/GEOS-Chem.v9-01-03_wPAHs/28_oce100mMERRA_fromspin/2000/PCB28_HIGH_2000.4x5.bpch
+POP_XMW                 : 257.54d-3  
+POP_KOA                 : 7.24d7 
+POP_KBC                 : 7.24d7 
+POP_K_POPG_OH           : 1.1d-12  
+POP_K_POPP_O3A          : 0d0  
+POP_K_POPP_O3B          : 0d0  
+POP_K_POPP_NO3          : 0d0
+POP_HSTAR               : 1.17d-2 
+POP_DEL_H               : -78.4d3   
+POP_DEL_Hw              : 51.8d0      
 ------------------------+------------------------------------------------------
 %%% DEPOSITION MENU %%% :
 Turn on Dry Deposition? : T
@@ -130,14 +137,16 @@ Turn on Wet Deposition? : T
 ------------------------+------------------------------------------------------
 %%% CHEMISTRY MENU %%%  : 
 Turn on Chemistry?      : T
+Use linear. strat. chem?: F
+ => Use Linoz for O3?   : F
 Chemistry Timestep [min]: 60
 Read and save CSPEC_FULL: F
 USE solver coded by KPP : F
 ------------------------+------------------------------------------------------
 %%% MERCURY MENU %%%    : 
-Use anthro Hg emiss for : 2000
+Use anthro Hg emiss for : 2005
 Error check tag/tot Hg? : F
-Use dynamic ocean Hg?   : F
+Use dynamic ocean Hg?   : T
 Preindustrial sim?      : F
 Ocean Hg restart file   : ocean.totHg.YYYYMMDDhh
 Use GTMM soil model?    : F
@@ -156,13 +165,13 @@ Schedule output for SEP : 300000000000000000000000000000
 Schedule output for OCT : 3000000000000000000000000000000
 Schedule output for NOV : 300000000000000000000000000000
 Schedule output for DEC : 3000000000000000000000000000000
-------------------------+------------------------------------------------------
+------------------------+-----------------------------------------------------
 %%% GAMAP MENU %%%      :
 diaginfo.dat path       : diaginfo.dat
 tracerinfo.dat path     : tracerinfo.dat
 ------------------------+------------------------------------------------------
 %%% DIAGNOSTIC MENU %%% : 
-Binary punch file name  : @BPCHNAME.bpch
+Binary punch file name  : @BPCHNAME
 Diagnostic Entries ---> :  L   Tracers to print out for each diagnostic
 ND01: Rn/Pb/Be source   :  0   all        
 ND02: Rn/Pb/Be decay    :  0   all             
@@ -223,13 +232,12 @@ ND59: -                 :  0   all
 ND60: Wetland Frac      :  0   all
 ND61: -                 :  0   all
 ND62: Inst column maps  :  0   all
-ND63: -                 :  0   all
 ND64: -                 :  0   all
 ND66: DAO 3-D fields    :  47  3
 ND67: DAO 2-D fields    :  0   all
 ND68: Airmass/Boxheight :  47  all
 ND69: Surface area      :  1   all
-ND70: Debug output      :  1   all
+ND70: Debug output      :  0   all
 ------------------------+------------------------------------------------------
 %%% PLANEFLIGHT MENU %%%:
 Turn on plane flt diag? : F
@@ -288,6 +296,14 @@ IMIN, IMAX of region    :   1  72
 JMIN, JMAX of region    :   1  46
 LMIN, LMAX of region    :   1   1
 ------------------------+------------------------------------------------------
+%%% ND63 MENU %%%       :
+Turn on ND63 diagnostic : F
+Inst 3-D timeser. file  : paranox_ts.YYYYMMDD.bpch
+Tracers to include      : 1
+Frequency [min]         : 120
+IMIN, IMAX of region    :  70  30
+JMIN, JMAX of region    :  23  46
+-------------------------------------------------------------------------------
 %%% PROD & LOSS MENU %%%:
 Turn on P/L (ND65) diag?: F
 # of levels for ND65    : 20
@@ -295,10 +311,10 @@ Save O3 P/L (ND20)?     : F
 Number of P/L families  : 0  
 ------------------------+------------------------------------------------------
 %%% ARCHIVED OH MENU %%%: 
-Dir w/ archived OH files: /net/fs03/d1/selin/geosruns/GC.vHolmes2009/data/ 
+Dir w/ archived OH files: /net/geoschem/data/gcgrid/gcdata/GEOS_4x5/mercury_201007/
 ------------------------+------------------------------------------------------
 %%% O3 P/L MENU %%%     : 
-Dir w/ O3 P/L rate files: /net/fs03/d1/selin/geosruns/GC.vHolmes2009/data/ 
+Dir w/ O3 P/L rate files: /net/geoschem/data/gcgrid/gcdata/GEOS_4x5/mercury_201007/
 ------------------------+------------------------------------------------------
 %%% UNIX CMDS MENU %%%  : 
 Background symbol       : & 
@@ -310,7 +326,4 @@ Unix unzip command      : gzip -dc
 Zip file suffix         : .gz
 ------------------------+------------------------------------------------------
 END OF FILE             :
-------------------------+-----------------------------------------------------
-
-
-
+------------------------+------------------------------------------------------

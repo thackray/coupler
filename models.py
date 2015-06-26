@@ -38,8 +38,8 @@ def format_time(dtime,out_type='str',abststart=None):
     elif out_type.lower() in ['gc','geos-chem', 'gchem', 'geoschem']:
         return dtime.strftime('%Y%m%d %H%M%S')
     elif out_type.lower() in ['mg', 'mitgcm', 'mit-gcm', 'mgcm']:
-        assert asbstart, "must give absolute start date and time"
-        hours = int((dtime-abststart).total_seconds()/3600)
+        assert abststart, "must give absolute start date and time"
+        hours = int((dtime-abststart).total_seconds()/3600)+1
         return '%.10i'%hours
     elif out_type.lower() in ['restart']:
         return dtime.strftime('%Y%m%d%H')
@@ -131,12 +131,17 @@ class Model(object):
         self.rundirname = modelinfo['rundirname']
         self.executable = modelinfo['executable']
         self.abststart = None
+        self._do_more_init()
+
+    def _do_more_init(self,):
+        """Defined, if needed, in children"""
+        return
 
     def setup(self, tstart, tend):
         """Do the general setup procedures. Procedures speific to the 
         individual models should not be defined here.
         """
-        self.rundir = os.path.join(self.rootdir,self.rundirname))
+        self.rundir = os.path.join(self.rootdir,self.rundirname)
         if not self.abststart:
             self.abststart = tstart
         self.tstart = tstart
@@ -145,7 +150,7 @@ class Model(object):
             os.mkdir(self.rundir)
         for fil in self.input_files:
             self._make_input_file(fil,self.rundir)
-        cp(self.executable,self.rundir)
+#        cp(self.executable,self.rundir)
         self._make_runscript(self.runscript,
                              os.path.join(self.rundir,
                                           os.path.basename(self.runscript)))
@@ -169,7 +174,8 @@ class Model(object):
         """Make a directory to put shared info in."""
         for for_model in self.out_for:
             dirname = '%s_to_%s'%(self.name,for_model)
-            os.mkdir(os.path.join(shared_dir,dirname))
+            if not os.path.exists(os.path.join(shared_dir,dirname)):
+                os.mkdir(os.path.join(shared_dir,dirname))
 
     def get_input(self, shared_dir):
         """Get info from other models from shared_dir."""
@@ -227,6 +233,9 @@ class GEOSChem(Model):
        - _make_runscript: make runscript for GEOSChem
     """
 
+    def _do_more_init(self,):
+        self.bpch_name = 'PCB%s.bpch'%format_time(self.tstart,'GC')
+
     def _make_shared_dict(self,):
         "Make fill_dict for shared_script"
         fill_dict = {'@GCPATH':self.rundir,
@@ -237,7 +246,7 @@ class GEOSChem(Model):
 
     def _make_input_file(self, template, destination):
         fill_dict = {'@STARTTIME':format_time(self.tstart,'GC'),
-                     '@ENDTIME':format_time(self,tend,'GC'),
+                     '@ENDTIME':format_time(self.tend,'GC'),
                      '@BPCHNAME':self.bpch_name,
                      '@RESTARTTIME':format_time(self.tstart,'restart')
                      }
