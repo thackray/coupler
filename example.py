@@ -1,6 +1,6 @@
 
 GCinfo = {'Name':'GEOS-Chem',
-          'rootdir':'GEOS-Chem',
+          'rootdir':'/path/to/here/GEOS-Chem',
           'done_tag':'GCdone',
           'running_tag':'GCrunning',
           'error_tag':'GCerror',
@@ -11,12 +11,12 @@ GCinfo = {'Name':'GEOS-Chem',
           'share_script':'geostogcm.m',
           'mat_share_script':'sendgeos.sh',
           'mat_output_files':['evasion_latlon.nc'],
-          'rundirname':['GEOS-Chem/run'],
+          'rundirname':'GEOS-Chem/run',
           'executable':'geos',
           }
 
 MGinfo = {'Name':'MITgcm',
-          'rootdir':'MITgcm',
+          'rootdir':'/path/to/here/MITgcm',
           'done_tag':'MGdone',
           'running_tag':'MGrunning',
           'error_tag':'MGerror',
