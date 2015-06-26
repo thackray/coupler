@@ -149,7 +149,7 @@ class Model(object):
         if not os.path.exists(self.rundir):
             os.mkdir(self.rundir)
         for fil in self.input_files:
-            self._make_input_file(fil,self.rundir)
+            self._make_input_file(fil,os.path.join(self.rundir,fil))
 #        cp(self.executable,self.rundir)
         self._make_runscript(self.runscript,
                              os.path.join(self.rundir,
