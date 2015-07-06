@@ -38,7 +38,7 @@ cp $workingdir/prepare_run_ecco_v4 ../input.ecco_v4/prepare_run
 ln -s ~gforget/ecco_v4_input/controls/* .
 ln -s ~gforget/ecco_v4_input/MITprof/* .
 ln -s ~gforget/ecco_v4_input/pickups/* .
-ln -s ~gforget/ecco_v4_input/era-interim/* .
+ln -sf ~gforget/ecco_v4_input/era-interim/* .
 
 #6.3 Forcing folder
 #Still in your run/ directory, make a forcing/ subdirectory:
@@ -65,4 +65,4 @@ mv wt_* xx_* control/
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/data* .
 cp -r /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB .
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/results_pcb/20150630_PCB28_2yrTest/mitgcmuv .
-cp $workingdir/qsub_itXX.csh .
+#cp $workingdir/qsub_itXX.csh .
