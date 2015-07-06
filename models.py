@@ -44,6 +44,20 @@ def format_time(dtime,out_type='str',abststart=None):
     elif out_type.lower() in ['restart']:
         return dtime.strftime('%Y%m%d%H')
 
+def put_a_three(date):
+    template = "Schedule output for JAN : 3000000000000000000000000000000\nSchedule output for FEB : 30000000000000000000000000000\nSchedule output for MAR : 3000000000000000000000000000000\nSchedule output for APR : 300000000000000000000000000000\nSchedule output for MAY : 3000000000000000000000000000000\nSchedule output for JUN : 300000000000000000000000000000\nSchedule output for JUL : 3000000000000000000000000000000\nSchedule output for AUG : 3000000000000000000000000000000\nSchedule output for SEP : 300000000000000000000000000000\nSchedule output for OCT : 3000000000000000000000000000000\nSchedule output for NOV : 300000000000000000000000000000\nSchedule output for DEC : 3000000000000000000000000000000"
+
+    firstdayspot = 26 # number of characters from left   
+    """Puts a three on the last day of a run for GEOS-Chem's silly 
+    output system.
+    """
+    template = template.splitlines()
+    imonth = date.month - 1
+    iday = date.day
+    template[imonth]=template[imonth][:25+iday]+'3'+template[imonth][26+iday:]
+    return template
+
+
 
 class FileTemplate(object):
     """Governs the reading and filling of file templates.
@@ -245,10 +259,12 @@ class GEOSChem(Model):
         return fill_dict
 
     def _make_input_file(self, template, destination):
+        outputschedule = put_a_three(self.tend)
         fill_dict = {'@STARTTIME':format_time(self.tstart,'GC'),
                      '@ENDTIME':format_time(self.tend,'GC'),
                      '@BPCHNAME':self.bpch_name,
-                     '@RESTARTTIME':format_time(self.tstart,'restart')
+                     '@RESTARTTIME':format_time(self.tstart,'restart'),
+                     '@OUTPUTSCHEDULE':outputschedule
                      }
         self._make_from_template(template, destination, fill_dict)
         return
