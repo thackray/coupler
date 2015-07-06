@@ -55,7 +55,7 @@ def put_a_three(date):
     imonth = date.month - 1
     iday = date.day
     template[imonth]=template[imonth][:25+iday]+'3'+template[imonth][26+iday:]
-    return template
+    return '\n'.join(template)
 
 
 
