@@ -13,7 +13,7 @@ files_to_install = ['geossetup.sh.template','mitgcmsetup.sh.template',
                     'prepare_run_input.template']
 
 for fi in files_to_install:
-    T = FileTemplate(fi.rstrip('.template'))
+    T = FileTemplate(fi.rstrip('template').rstrip('.'))
     T.load_template(fi)
     T.set_value('@INSTALLPATH',installdir)
     T.write()

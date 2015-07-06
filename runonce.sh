@@ -21,14 +21,16 @@ module add intel
 
 cd @RUNDIR # cd to your run dir
 rm -f logm # clear pre-existing log files 
-
+rm GCdone
+touch GCrunning
 # copy geos into run dir
 #cp /home/selin/geoschem/GEOS-Chem.v8-03-02/Code.v8-03-02/bin/geos geos
 #cp /home/clf/Geos/geos-chem/GeosCore/geos geos
 
 #run #1
 time ./@EXECUTABLE > logm # time job; pipe output to log file 
-
+rm GCrunning
+touch GCdone
 
 
 
