@@ -248,7 +248,7 @@ class GEOSChem(Model):
     """
 
     def _do_more_init(self,):
-        self.bpch_name = 'PCB%s.bpch'
+        self.bpch_name = 'PCB%s.bpch'%format_time(self.tend,'GC')
 
     def _make_shared_dict(self,):
         "Make fill_dict for shared_script"
