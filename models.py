@@ -159,6 +159,7 @@ class Model(object):
             self.abststart = tstart
         self.tstart = tstart
         self.tend = tend
+        self._do_more_init()
         if not os.path.exists(self.rundir):
             os.mkdir(self.rundir)
         for fil in self.input_files:
@@ -167,8 +168,7 @@ class Model(object):
         self._make_runscript(self.runscript,
                              os.path.join(self.rundir,
                                           os.path.basename(self.runscript)))
-        self._do_more_init()
-
+        
         return
         
     def send_output(self, shared_dir):
