@@ -145,7 +145,6 @@ class Model(object):
         self.rundirname = modelinfo['rundirname']
         self.executable = modelinfo['executable']
         self.abststart = None
-        self._do_more_init()
 
     def _do_more_init(self,):
         """Defined, if needed, in children"""
@@ -168,6 +167,8 @@ class Model(object):
         self._make_runscript(self.runscript,
                              os.path.join(self.rundir,
                                           os.path.basename(self.runscript)))
+        self._do_more_init()
+
         return
         
     def send_output(self, shared_dir):
