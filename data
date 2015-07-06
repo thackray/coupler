@@ -77,7 +77,7 @@ nIter0=@STARTTIME,
 # 1 means start from an initial condition or pickup file
 # nIter0=8772,
 #2 lev2 for testing:
-nTimeSteps=@TIMESTEPS,
+nTimeSteps=@TIMESTEP,
 #20y:
 #nTimeSteps=175295,
 #nTimeSteps is in units of hours
