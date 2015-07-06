@@ -41,13 +41,8 @@ The coupler code is broken into a few tiers:
 
 Steps to run:
 1. Clone this repository
-2. Change mitgcmsetup.sh to have the cloned directory as 'workingdir'
-   (and change prepare_run_ecco_v4 and prepare_run_input) (Sorry, will fix!)
-3. Run mitgcmsetup.sh (ssh to fs03 first, some big files get moved)
-4. Change geossetup.sh to have the cloned directory as 'workingdir'
-5. Run geossetup.sh
-6. Change 'rootdir' path to cloned directory
-7. python example.py
+2. Run setup.py (ssh to a file server first)
+3. python example.py
 If these steps work, you should be able to make scripts like example.py which
-will do the running that you want them to, if you also tweak the model rundirs
+will do the running that you want them to, if you also tweak the model run dirs
 appropriately (give them the initial conditions they need, etc.)
