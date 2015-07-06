@@ -18,5 +18,7 @@ for fi in files_to_install:
     T.set_value('@INSTALLPATH',installdir)
     T.write()
 
+os.system('chmod +x mitgcmsetup.sh')
+os.system('chmod +x geossetup.sh')
 os.system('./mitgcmsetup.sh')
 os.system('./geossetup.sh')
