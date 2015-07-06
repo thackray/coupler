@@ -35,9 +35,9 @@ cp $workingdir/prepare_run_ecco_v4 ../input.ecco_v4/prepare_run
 
 #6.2 Link forcing files to your run folder
 #Go to your run/ folder:
-ln -s ~gforget/ecco_v4_input/controls/* .
-ln -s ~gforget/ecco_v4_input/MITprof/* .
-ln -s ~gforget/ecco_v4_input/pickups/* .
+ln -sf ~gforget/ecco_v4_input/controls/* .
+ln -sf ~gforget/ecco_v4_input/MITprof/* .
+ln -sf ~gforget/ecco_v4_input/pickups/* .
 ln -sf ~gforget/ecco_v4_input/era-interim/* .
 
 #6.3 Forcing folder
