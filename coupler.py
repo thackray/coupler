@@ -8,7 +8,9 @@ from datetime import datetime, timedelta
 
 def check_state(path,state_tag):
     print "Checking for state tag ( %s ) in %s"%(state_tag,path)
-    return (state_tag in os.listdir(path))
+    result = (state_tag in os.listdir(path))
+    print result
+    return result
 
 class Coupler(object):
     """Coupler for coupling two (or more?) models. Will handle the 
