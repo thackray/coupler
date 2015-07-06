@@ -17,3 +17,6 @@ for fi in files_to_install:
     T.load_template(fi)
     T.set_value('@INSTALLPATH',installdir)
     T.write()
+
+os.system('./mitgcmsetup.sh')
+os.system('./geossetup.sh')
