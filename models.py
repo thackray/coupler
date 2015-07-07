@@ -40,7 +40,7 @@ def format_time(dtime,out_type='str',abststart=None):
         return dtime.strftime('%Y%m%d %H%M%S')
     elif out_type.lower() in ['mg', 'mitgcm', 'mit-gcm', 'mgcm']:
         assert abststart, "must give absolute start date and time"
-        hours = int((dtime-abststart).total_seconds()/3600)+1
+        hours = int((dtime-abststart).total_seconds()/3600.)+1
         return '%.10i'%hours
     elif out_type.lower() in ['restart']:
         return dtime.strftime('%Y%m%d%H')
