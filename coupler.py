@@ -97,8 +97,11 @@ class Coupler(object):
 
 
     def _cleanup(self, ):
-        """Submit the cleanup job to group the outputs, remove temps, etc."""    
-        pass
+        """Submit the cleanup job to group the outputs, remove temps, etc."""  
+        print "All Done! Thanks for using coupler.py"
+        return
+
+
 if __name__=='__main__':
     from models import GEOSChem, MITgcm
     from testing import GCinfo, MGinfo
