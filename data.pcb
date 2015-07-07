@@ -122,6 +122,6 @@
 # PCB or Hg simulations.
 #
   PCB_emisPeriod    =  2628000.,
-  PCB_emisCycle     = 31536000.,  
+  PCB_emisCycle     =  2628000.,  
 
  &
