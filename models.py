@@ -223,8 +223,10 @@ class Model(object):
                                      os.path.join(self.rundir,
                                                   self.share_script),
                                      self._make_shared_dict())
-            cp(self.mat_share_script, 
-               os.path.join(self.rundir,self.mat_share_script))
+            self._make_from_template(self.mat_share_script, 
+                                     os.path.join(self.rundir,
+                                                  self.mat_share_script),
+                                     {'@RUNDIR':self.rundir})
             submit(os.path.join(self.rundir,self.mat_share_script))
             while not check_state(self.rundir,self.sending_tag):
                 time.sleep(2)
