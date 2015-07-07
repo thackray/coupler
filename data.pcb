@@ -1,0 +1,127 @@
+ &PCB_FORCING
+
+#========================================================
+# REVISION HISTORY
+#   11 May 2015 - H. Amos - Updated from ECCOv1 to ECCOv4
+#                           based on Yanxu's data.hg file
+#   24 Jun 2015 - H. Amos - Update dep and atm conc files                           
+#========================================================
+
+#--------------------------------------------------------
+# Offline meteorological forcing fields (ECCO v1)
+#--------------------------------------------------------
+
+# ECCOv4 has online ice, wind, and solar radiation, so you 
+# don't need to read in external files
+# 
+#  PCB_iceFile    = './input/nasa_icefraction_mth-2d.bin',       
+#  PCB_windFile   = './input_PCB/wind_mth_2000.MERRA.1x1.bin',
+#  radsw_file     = './input_gc/radsw.ecco.1x1.bin',
+
+#--------------------------------------------------------
+# PCB forcing fields
+#--------------------------------------------------------
+
+# Atmospheric concentrations (mol/m3) 
+## 2-yr monthly means from GEOS-Chem
+#  PCBa_concFile = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB/PCB28_popgconc_2009-2010_eccov4_llc90.bin',
+ PCBa_concFile = '@RUNDIR/input_PCB/popgconc_llc90.bin',
+
+# Atmospheric deposition (mol/m2/s)
+## 2-yrs of monthly means from GEOS-Chem
+# PCBp_depoFile  = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB/PCB28_partdep_2009-2010_eccov4_llc90.bin',
+# PCBa_depoFile  = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB/PCB28_gasdep_2009-2010_eccov4_llc90.bin',
+ PCBp_depoFile  = '@RUNDIR/input_PCB/partdep_llc90.bin',
+ PCBa_depoFile  = '@RUNDIR/input_PCB/gasdep_llc90.bin',
+
+# River inputs (kg/s) 
+  PCBa_riverFile = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_hg/hg2depo_jenny30yrs.eccov4.llc90.bin',
+  PCBp_riverFile = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_hg/hg2depo_jenny30yrs.eccov4.llc90.bin',
+
+#--------------------------------------------------------
+# DARWIN forcing fields
+#--------------------------------------------------------
+
+# Chlorophyll (mg chl/m3)
+  chl_File = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/chl.04.09.2015_05years.sixspecies.eccov4.llc90.bin',
+
+# Net primary productivity (mmol P/m3/s)
+  npp_File = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/npp.04.09.2015_05years.sixspecies.eccov4.llc90.bin',
+
+# Dissolved organic carbon (mmol C/m3)
+  doc_File = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/doc.04.09.2015_05years.sixspecies.plusSchlitzer.eccov4.llc90.bin',
+
+# Particulate organic carbon (mmol C/m3)
+  poc_File = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/poc.04.09.2015_05years.sixspecies.incplankton.eccov4.llc90.bin',
+
+# Sinking flux of POC (mmol C/m3 * m/d)
+  Fpoc_File      = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/fpoc.04.09.2015_05years.sixspecies.incplankton.eccov4.llc90.bin',
+
+# Remineralization flux of POC and DOC (mmol C/m3/d)
+  Fremin_File    = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/fremin.04.09.2015_05years.sixspecies.incdoc.eccov4.llc90.bin',
+
+#--------------------------------------------------------
+# Foodweb forcing fields
+# - Note: You must have FOODW_MODE defined in your 
+#         *_OPTIONS.h file before you uncomment these files
+#         or you'll get a NAMELIST error. 
+#--------------------------------------------------------
+
+# Nitrate (mmol N/m3)
+#  NO3_File='/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/no3.04.09.2015_05years.sixspecies.eccov4.llc90.bin',
+
+# Phytoplankton (mmol C/m3)
+#  phytoP_File='/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/phytop.04.09.2015_05years.sixspecies.eccov4.llc90',
+
+# Zooplankton (mmol C/m3)
+#  zooP_File='/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/zoop.04.09.2015_05years.sixspecies.eccov4.llc90',    
+
+# Solube iron deposition
+#dfe_File         ='/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_darwin/mahowald2009_solubile_current_smooth.eccov4.bin',
+
+#--------------------------------------------------------
+# Set forcing period and cycle
+#--------------------------------------------------------
+
+# Useful times to know for Period  & Cycle
+#    2628000 sec =   30 days -  1 month
+#   31536000 sec =  365 days -  1 yr
+#   63072000 sec =  730 days -  2 yrs
+#  315360000 sec = 3650 days - 10 yrs 
+#
+# Note: Cycle must be divisble by Period.
+
+# Frequency of 2D forcing fields. This controls:
+#    - offline solar radiation (ECCOv1)
+#    - offline wind speed      (ECCOv1)
+#    - offline sea ice         (ECCOv1)
+#    - atmospheric gas concentrations
+#    - atmospheric deposition
+#
+#  PCB_forcingPeriod=2628000. ,  
+#  PCB_forcingCycle=31536000. ,  
+
+#  PCB_forcingPeriod =  2628000. ,  
+#  PCB_forcingCycle  = 63072000. ,  
+   PCB_forcingPeriod = 2628000.,
+   PCB_forcingCycle = 31536000.0,
+
+# Frequency of biogeochemistry fields. This controls:
+#   - Chl, NPP
+#   - DOC, POC, Fdoc, Fpoc, Fremin
+#   - N03, solFe
+#   - zooplankton, phytoplankton
+#   - river inputs
+#
+  PCB_chemPeriod    =  2628000.,
+  PCB_chemCycle     = 31536000.,  
+
+# Frequency of emissions fields. This was added by
+# Xianming Zhang (Harvard) for the PFOS simulation
+# and currently doesn't control anything for the 
+# PCB or Hg simulations.
+#
+  PCB_emisPeriod    =  2628000.,
+  PCB_emisCycle     = 31536000.,  
+
+ &
