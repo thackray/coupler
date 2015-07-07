@@ -306,7 +306,7 @@ class MITgcm(Model):
 
     def _make_shared_dict(self,):
         "Make fill_dict for shared_script"
-        fill_dict = {'@OCNPATH':self.rundir,
+        fill_dict = {'@OCNPATH':os.path.join(self.rundir,'diags'),
                      '@OCNDIAG':'PCBaEVAS',
                      '@LLC90TIME':self.format_time(self.tend,'MG',
                                                    self.abststart)
