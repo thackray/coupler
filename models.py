@@ -265,7 +265,7 @@ class GEOSChem(Model):
 
     def _make_shared_dict(self,):
         "Make fill_dict for shared_script"
-        fill_dict = {'@GCPATH':self.rundir,
+        fill_dict = {'@GCPATH':self.rundir+'/',
                      '@GCFILE':self.bpch_name,
                      '@GCYEAR':str(self.tstart.year),
                      '@GCMONTH':str(self.tstart.month)
