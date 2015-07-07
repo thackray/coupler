@@ -104,7 +104,7 @@
 #  PCB_forcingPeriod =  2628000. ,  
 #  PCB_forcingCycle  = 63072000. ,  
    PCB_forcingPeriod = 2628000.,
-   PCB_forcingCycle = 31536000.0,
+   PCB_forcingCycle = 2628000.,
 
 # Frequency of biogeochemistry fields. This controls:
 #   - Chl, NPP
