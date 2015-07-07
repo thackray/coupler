@@ -64,5 +64,8 @@ mv wt_* xx_* control/
 #If you're running the PCB simulation, copy data* files to your run/ directory from here:
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/data* .
 cp -r /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB .
+cp input_PCB/PCB28_gasdep_2009-2010_eccov4_llc90.bin gasdep_llc90.bin
+cp input_PCB/PCB28_partdep_2009-2010_eccov4_llc90.bin partdep_llc90.bin
+cp input_PCB/PCB28_popgconc_2009-2010_eccov4_llc90.bin popgconc_llc90.bin
 cp /net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/results_pcb/20150630_PCB28_2yrTest/mitgcmuv .
 #cp $workingdir/qsub_itXX.csh .
