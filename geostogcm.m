@@ -30,7 +30,7 @@ clear all; close all;
 
 % location of GEOS-Chem deposition data
 %GC_path         = '/home/clf/Geos/GEOS-Chem.v9-01-03_wPAHs/28_0422_MERRAseas/2010/';
-GC_path          = '@GCPATH'
+GC_path          = '@GCPATH/'
 %GC_file         = '2010.bpch';   % <-- this has to be updated every time step
                                  %     we pass information from the atmosphere
                                  %     to the ocean

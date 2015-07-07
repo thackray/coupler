@@ -30,7 +30,7 @@ clear all; close all;
 
 % read MITgcm evasion (units?)
 %ocnpath       = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/';
-ocnpath       = '@OCNPATH'
+ocnpath       = '@OCNPATH/'
 %ocndiag       = 'PTRACER01'; % this is a placeholder for EVASION diagnostic
 ocndiag       = '@OCNDIAG'
 %time_llc90    = 9;           % <-- this has to be updated every timestep we
