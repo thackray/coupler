@@ -224,9 +224,9 @@ class Model(object):
             cp(self.mat_share_script, 
                os.path.join(self.rundir,self.mat_share_script))
             submit(os.path.join(self.rundir,self.mat_share_script))
-            while not check_state(model.rundir,model.sending_tag):
+            while not check_state(self.rundir,self.sending_tag):
                 time.sleep(2)
-            while not check_state(model.rundir,model.sent_tag):
+            while not check_state(self.rundir,self.sent_tag):
                 time.sleep(5)
             for outputname in self.mat_output_files: 
                 cp(outputname,os.path.join(localdirname,outputname))
