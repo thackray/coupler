@@ -41,7 +41,7 @@ The coupler code is broken into a few tiers:
 
 Steps to run:
 1. Clone this repository
-2. Run setup.py (ssh to a file server first)
+2. python setup.py (ssh to a file server first)
 3. python example.py
 If these steps work, you should be able to make scripts like example.py which
 will do the running that you want them to, if you also tweak the model run dirs
