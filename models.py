@@ -18,6 +18,7 @@ thackray@mit.edu
 import shutil
 import datetime
 import os
+import time
 from coupler import check_state
 # Convenience functions to help make things easier to follow in the code. 
 
