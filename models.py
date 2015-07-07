@@ -16,7 +16,7 @@ thackray@mit.edu
 """
 
 import shutil
-import datetime
+from datetime import datetime, timedelta
 import os
 import time
 from coupler import check_state
