@@ -25,14 +25,14 @@
 # Atmospheric concentrations (mol/m3) 
 ## 2-yr monthly means from GEOS-Chem
 #  PCBa_concFile = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB/PCB28_popgconc_2009-2010_eccov4_llc90.bin',
- PCBa_concFile = '@RUNDIR/input_PCB/popgconc_llc90.bin',
+ PCBa_concFile = '@RUNDIR/popgconc_llc90.bin',
 
 # Atmospheric deposition (mol/m2/s)
 ## 2-yrs of monthly means from GEOS-Chem
 # PCBp_depoFile  = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB/PCB28_partdep_2009-2010_eccov4_llc90.bin',
 # PCBa_depoFile  = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/input_PCB/PCB28_gasdep_2009-2010_eccov4_llc90.bin',
- PCBp_depoFile  = '@RUNDIR/input_PCB/partdep_llc90.bin',
- PCBa_depoFile  = '@RUNDIR/input_PCB/gasdep_llc90.bin',
+ PCBp_depoFile  = '@RUNDIR/partdep_llc90.bin',
+ PCBa_depoFile  = '@RUNDIR/gasdep_llc90.bin',
 
 # River inputs (kg/s) 
   PCBa_riverFile = '/home/geos_harvard/yanxu/MITgcm/verification/global_hg_llc90/run/input_hg/hg2depo_jenny30yrs.eccov4.llc90.bin',
