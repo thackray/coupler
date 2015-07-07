@@ -38,7 +38,7 @@ ocndiag       = '@OCNDIAG'
 time_llc90    = @LLC90TIME
 
 % name of netcdf file containing regridded evasion to pass to GEOS-Chem
-outfile_evas = 'evasion_latlon.nc';
+outfile_evas = 'MITgcm_to_GEOS-Chem/evasion_latlon.nc';
 
 % regrid MITgcm evasion from llc90 to GEOS-Chem 4x5 lat-lon grid
 regrid_evas_llc2ll( ocnpath, ocndiag, time_llc90, outfile_evas, 'TRUE' )
