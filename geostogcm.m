@@ -43,9 +43,12 @@ gc_yyyy         = @GCYEAR;       % <-- these have to be updated every time step
 gc_mm           = @GCMONTH;      % <--
 
 % name deposition files that will go to the MITgcm
-outfile_gasdep  = 'gasdep_llc90.bin' ;  % gas-phase      deposition (kg/m2/s)
-outfile_partdep = 'partdep_llc90.bin';  % particle-phase deposition (kg/m2/s)
-outfile_popgconc = 'popgconc_llc90.bin';  % atmospheric concentration (ng/m3)
+outfile_gasdep  = 'GEOS-Chem_to_MITgcm/gasdep_llc90.bin' ;  
+% gas-phase      deposition (kg/m2/s)
+outfile_partdep = 'GEOS-Chem_to_MITgcm/partdep_llc90.bin';  
+% particle-phase deposition (kg/m2/s)
+outfile_popgconc = 'GEOS-Chem_to_MITgcm/popgconc_llc90.bin';  
+% atmospheric concentration (ng/m3)
 
 % regrid GEOS-Chem lat-lon deposition to MITgcm llc90 grid
 regrid_dep_ll2llc( GC_file         ,...

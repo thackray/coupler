@@ -231,7 +231,9 @@ class Model(object):
                                      os.path.join(self.rundir,
                                                   self.mat_share_script),
                                      {'@RUNDIR':self.rundir})
+            cd(self.rundir)
             submit(os.path.join(self.rundir,self.mat_share_script))
+            cd(self.rootdir)
             while not check_state(self.rundir,self.sending_tag):
                 time.sleep(2)
             while not check_state(self.rundir,self.sent_tag):
