@@ -25,23 +25,6 @@ clear all; close all;
 %=================================================================
 
 %-----------------------------------------------------------------
-% Regrid deposition: lat-lon ----> lat-lon-cap ("llc90")
-%-----------------------------------------------------------------
-
-% location of GEOS-Chem deposition data
-%GC_path         = '/home/clf/Geos/GEOS-Chem.v9-01-03_wPAHs/28_0422_MERRAseas/2010/';
-%GC_file         = '2010.bpch';   % <-- this has to be updated every time step
-                                 %     we pass information from the atmosphere
-                                 %     to the ocean
-
-% name deposition files that will go to the MITgcm
-%outfile_gasdep  = 'gasdep_llc90.bin' ;  % gas-phase      deposition (kg/m2/s)
-%outfile_partdep = 'partdep_llc90.bin';  % particle-phase deposition (kg/m2/s)
-
-% regrid GEOS-Chem lat-lon deposition to MITgcm llc90 grid
-%regrid_dep_ll2llc( GC_file , GC_path, outfile_gasdep, outfile_partdep, 'TRUE' )
-
-%-----------------------------------------------------------------
 % Regrid evasion: llc90 --> lat-lon
 %-----------------------------------------------------------------
 

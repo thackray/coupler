@@ -267,6 +267,8 @@ class GEOSChem(Model):
         "Make fill_dict for shared_script"
         fill_dict = {'@GCPATH':self.rundir,
                      '@GCFILE':self.bpch_name,
+                     '@GCYEAR':self.tstart.year,
+                     '@GCMONTH':self.tstart.month
                      }
                      
         return fill_dict
@@ -305,7 +307,7 @@ class MITgcm(Model):
     def _make_shared_dict(self,):
         "Make fill_dict for shared_script"
         fill_dict = {'@OCNPATH':self.rundir,
-                     '@OCNDIAG':EVASIONDIAG,
+                     '@OCNDIAG':'PCBaEVAS',
                      '@LLC90TIME':self.format_time(self.tend,'MG',
                                                    self.abststart)
                      }

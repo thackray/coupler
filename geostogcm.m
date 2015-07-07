@@ -36,26 +36,25 @@ GC_path          = '@GCPATH'
                                  %     to the ocean
 GC_file          = '@GCFILE'
 
+% year and month of simulated deposition
+gc_yyyy         = @GCYEAR;       % <-- these have to be updated every time step
+                                 %     we pass information from the atmosphere
+                                 %     to the ocean
+gc_mm           = @GCMONTH;      % <--
 
 % name deposition files that will go to the MITgcm
 outfile_gasdep  = 'gasdep_llc90.bin' ;  % gas-phase      deposition (kg/m2/s)
 outfile_partdep = 'partdep_llc90.bin';  % particle-phase deposition (kg/m2/s)
+outfile_popgconc = 'popgconc_llc90.bin';  % atmospheric concentration (ng/m3)
 
 % regrid GEOS-Chem lat-lon deposition to MITgcm llc90 grid
-regrid_dep_ll2llc( GC_file , GC_path, outfile_gasdep, outfile_partdep, 'TRUE' )
-
-%-----------------------------------------------------------------
-% Regrid evasion: llc90 --> lat-lon
-%-----------------------------------------------------------------
-
-% read MITgcm evasion (units?)
-%ocnpath       = '/net/fs02/d2/geos_harvard/helen/MITgcm_ECCOv4/verification/global_pcb_llc90/run/';
-%ocndiag       = 'PTRACER01'; % this is a placeholder for EVASION diagnostic
-%time_llc90    = 9;           % <-- this has to be updated every timestep we
-                             %     pass information from the ocean to atmosphere
-
-% name of netcdf file containing regridded evasion to pass to GEOS-Chem
-%outfile_evas = 'evasion_latlon.nc';
-
-% regrid MITgcm evasion from llc90 to GEOS-Chem 4x5 lat-lon grid
-%regrid_evas_llc2ll( ocnpath, ocndiag, time_llc90, outfile_evas, 'TRUE' )
+regrid_dep_ll2llc( GC_file         ,...
+                   GC_path         ,...
+                   outfile_gasdep  ,...
+                   outfile_partdep ,...
+                   outfile_popgconc,...
+                   gc_yyyy         ,...
+                   gc_mm           ,...
+                   'PCB-28'        ,...  
+                   'TRUE'          )
+return

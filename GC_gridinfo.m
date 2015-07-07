@@ -39,3 +39,25 @@ lon_gc_vec = 180. + lon_gc_vec;
 % make sure lat and lon arrays are double
 lat_gc = double( lat_gc );
 lon_gc = double( lon_gc );
+
+% read in GEOS-Chem grid area (m2)
+% - columns: I  |  J | area
+A_col = load('areas_4x5_m2.dat');
+
+% convert column to array of grid areas (m2)
+surfarea = zeros(size(lat_gc,1), size(lat_gc,2));  % initialize array
+cc       = 1; % indexer / counter
+ 
+for i = 1:size(lat_gc,1);
+for j = 1:size(lat_gc,2);
+  surfarea(i,j) = A_col(cc,3);  % store surface area
+  cc            = cc + 1;       % increment counter
+end
+end
+
+% quick visiual check -- looks as expected
+if 0;
+clc;
+figure
+pcolor(surfarea); shading flat;
+end
