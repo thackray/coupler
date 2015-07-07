@@ -133,6 +133,7 @@ class Model(object):
         self.homedir = os.getcwd()
         self.name = modelinfo['Name']
         self.rootdir = modelinfo['rootdir']
+        self.shared_dir = os.path.join(self.rootdir,'shared')
         self.done_tag = modelinfo['done_tag']
         self.running_tag = modelinfo['running_tag']
         self.error_tag = modelinfo['error_tag']
@@ -238,8 +239,8 @@ class Model(object):
                 time.sleep(2)
             while not check_state(self.rundir,self.sent_tag):
                 time.sleep(5)
-            for outputname in self.mat_output_files: 
-                cp(outputname,os.path.join(localdirname,outputname))
+#            for outputname in self.mat_output_files: 
+#                cp(outputname,os.path.join(localdirname,outputname))
 
         return
 
