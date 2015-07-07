@@ -142,6 +142,7 @@ class Model(object):
         self.out_for = modelinfo['out_for']
         self.runscript = modelinfo['runscript']
         self.input_files = modelinfo['input_files']
+        self.files_to_copy = modelinfo['files_to_copy']
         self.share_script = modelinfo['share_script']
         self.mat_share_script = modelinfo['mat_share_script']
         self.mat_output_files = modelinfo['mat_output_files']
@@ -171,7 +172,9 @@ class Model(object):
         self._make_runscript(self.runscript,
                              os.path.join(self.rundir,
                                           os.path.basename(self.runscript)))
-        
+        for fil in self.files_to_copy:
+            if not os.path.exists(os.path.join(self.rundir,fil)):
+                cp(fil, os.path.join(self.rundir,fil))
         return
         
     def send_output(self, shared_dir):
