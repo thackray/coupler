@@ -135,6 +135,8 @@ class Model(object):
         self.done_tag = modelinfo['done_tag']
         self.running_tag = modelinfo['running_tag']
         self.error_tag = modelinfo['error_tag']
+        self.sending_tag = modelinfo['sending_tag']
+        self.sent_tag = modelinfo['sent_tag']
         self.in_from = modelinfo['in_from']
         self.out_for = modelinfo['out_for']
         self.runscript = modelinfo['runscript']

@@ -1,4 +1,4 @@
-source modules.csh
+source /etc/profiles.d/modules.csh
 
 module add matlab
 rm MGsent
