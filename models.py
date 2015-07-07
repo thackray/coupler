@@ -18,7 +18,7 @@ thackray@mit.edu
 import shutil
 import datetime
 import os
-
+from coupler import check_state
 # Convenience functions to help make things easier to follow in the code. 
 
 def cp(origin, destination):
@@ -224,6 +224,10 @@ class Model(object):
             cp(self.mat_share_script, 
                os.path.join(self.rundir,self.mat_share_script))
             submit(os.path.join(self.rundir,self.mat_share_script))
+            while not check_state(model.rundir,model.sending_tag):
+                time.sleep(2)
+            while not check_state(model.rundir,model.sent_tag):
+                time.sleep(5)
             for outputname in self.mat_output_files: 
                 cp(outputname,os.path.join(localdirname,outputname))
 
