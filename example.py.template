@@ -45,7 +45,7 @@ from datetime import datetime
 
 M1 = GEOSChem(GCinfo)
 M2 = MITgcm(MGinfo)
-start_time, end_time = datetime(2000,1,1,0),datetime(2000,1,5,0)
+start_time, end_time = datetime(2000,1,1,0),datetime(2000,1,7,0)
 step = 2*24
 coupled = Coupler(start_time, end_time, step, model_objs=[M1,M2], 
                   check_frequency=5)
