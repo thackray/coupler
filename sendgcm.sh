@@ -1,4 +1,4 @@
-source /etc/profiles.d/modules.csh
+source /etc/profile.d/modules.csh
 
 module add matlab
 cd @RUNDIR
