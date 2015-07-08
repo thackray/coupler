@@ -40,7 +40,7 @@ def format_time(dtime,out_type='str',abststart=None):
         return dtime.strftime('%Y%m%d %H%M%S')
     elif out_type.lower() in ['mg', 'mitgcm', 'mit-gcm', 'mgcm']:
         assert abststart, "must give absolute start date and time"
-        hours = int((dtime-abststart).total_seconds()/3600.)+1
+        hours = int((dtime-abststart).total_seconds()/3600.)
         return '%.10i'%hours
     elif out_type.lower() in ['restart']:
         return dtime.strftime('%Y%m%d%H')
@@ -321,7 +321,7 @@ class MITgcm(Model):
         tadj = timedelta(hours=1)
         fill_dict = {'@RUNDIR':self.rundir,
                      '@STARTTIME':str(int(format_time(self.tstart,
-                                                  'MG',self.abststart))),
+                                                      'MG',self.abststart))+1),
                      '@TIMESTEP':str(int(format_time(self.tend,
                                                  'MG',self.tstart))),
                      '@HOURTIMESTEP':str(int(format_time(self.tend,
