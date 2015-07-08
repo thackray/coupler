@@ -320,9 +320,9 @@ class MITgcm(Model):
     def _make_input_file(self, template, destination):
         tadj = timedelta(hours=1)
         fill_dict = {'@RUNDIR':self.rundir,
-                     '@STARTTIME':str(int(format_time(self.tstart-tadj,
+                     '@STARTTIME':str(int(format_time(self.tstart,
                                                   'MG',self.abststart))),
-                     '@TIMESTEP':str(int(format_time(self.tend-tadj,
+                     '@TIMESTEP':str(int(format_time(self.tend,
                                                  'MG',self.tstart))),
                      '@HOURTIMESTEP':str(int(format_time(self.tend,
                                                  'MG',self.tstart))*3600),
