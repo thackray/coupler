@@ -326,6 +326,8 @@ class MITgcm(Model):
                                                  'MG',self.tstart))),
                      '@HOURTIMESTEP':str(int(format_time(self.tend,
                                                  'MG',self.tstart))*3600),
+                     '@PICKUPSTEP':str(int(format_time(self.tend,
+                                                 'MG',self.tstart))*3600),
                      }
         if self.tstart==self.abststart:
             fill_dict['@PICKUPSUFF'] = '#'

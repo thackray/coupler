@@ -102,7 +102,7 @@ nTimeSteps=@TIMESTEP,
  alph_AB=0.5,
  beta_AB=0.281105,
 #
- pChkptFreq  =31557600.0,
+ pChkptFreq  =@PICKUPSTEP,
 # 31557600 is one year
 # 2629800 is 1 month
  chkptFreq   = 31557600.0,
