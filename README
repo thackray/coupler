@@ -42,7 +42,7 @@ The coupler code is broken into a few tiers:
 Steps to run:
 1. Clone this repository
 2. python setup.py (ssh to a file server first)
-3. python example.py
+3. python example.py (must be on head node to submit jobs to queue)
 If these steps work, you should be able to make scripts like example.py which
 will do the running that you want them to, if you also tweak the model run dirs
 appropriately (give them the initial conditions they need, etc.)
