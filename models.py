@@ -32,7 +32,7 @@ def cd(destination):
 def submit(scriptname):
     return os.system('qsub '+scriptname)
 
-def submit_prequed(pathname):
+def submit_prequeued(pathname):
     os.system('touch '+os.path.join(pathname,'GO'))
     return 
 
@@ -252,7 +252,7 @@ class Model(object):
         """Run the model."""
         #cd(self.rundir)
         #submit(self.runscript)
-        submit_prequed(self.rundir)
+        submit_prequeued(self.rundir)
         cd(self.homedir)
 
 class GEOSChem(Model):
