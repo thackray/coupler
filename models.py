@@ -32,6 +32,10 @@ def cd(destination):
 def submit(scriptname):
     return os.system('qsub '+scriptname)
 
+def submit_prequed(pathname):
+    os.system('touch '+os.path.join(pathname,'GO'))
+    return 
+
 def format_time(dtime,out_type='str',abststart=None):
     """Change the time to the format that a particular model likes."""
     if out_type.lower() in ['str','string']:
@@ -246,8 +250,9 @@ class Model(object):
 
     def go(self,):
         """Run the model."""
-        cd(self.rundir)
-        submit(self.runscript)
+        #cd(self.rundir)
+        #submit(self.runscript)
+        submit_prequed(self.rundir)
         cd(self.homedir)
 
 class GEOSChem(Model):
