@@ -82,10 +82,16 @@ class Coupler(object):
         for model in self.models:
             model.go()
         RUNNING = False
+        isrunning = {}
+        for model in self.models:
+            isrunning[model] = False
         while not RUNNING:
             RUNNING = True
             for model in self.models:
-                RUNNING *= check_state(model.rundir, model.running_tag)
+                if not isrunning[model]:
+                    isrunning[model] = check_state(model.rundir, 
+                                                   model.running_tag) 
+                RUNNING *= isrunning[model]
             time.sleep(self.check_frequency)
         return
 
