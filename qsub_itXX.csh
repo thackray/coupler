@@ -15,10 +15,18 @@ setenv MPI_INC_DIR /home/software/intel/intel-2013_sp1.0.080/pkg/openmpi/openmpi
 setenv NETCDF_ROOT /home/software/intel/intel-2013_sp1.0.080/pkg/netcdf/netcdf-20130909/
 
 cd @RUNDIR
-rm MGdone
-touch MGrunning
-mpirun -np 13 ./@EXECUTABLE
-rm MGrunning
-touch MGdone
+while [ ! -f STOP ]
+do
+if [ -f GO ]
+then 
+    rm MGdone
+    touch MGrunning
+    mpirun -np 13 ./@EXECUTABLE
+    rm MGrunning
+    touch MGdone
+else
+    sleep 2
+fi
+done
 exit 0
 

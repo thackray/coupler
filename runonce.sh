@@ -20,17 +20,25 @@ module add intel
    setenv OMP_NUM_THREADS 8
 
 cd @RUNDIR # cd to your run dir
-rm -f logm # clear pre-existing log files 
-rm GCdone
-touch GCrunning
+while [ ! -f STOP ]
+do
+if [ -f GO ]
+then
+    rm -f logm # clear pre-existing log files 
+    rm GCdone
+    touch GCrunning
 # copy geos into run dir
 #cp /home/selin/geoschem/GEOS-Chem.v8-03-02/Code.v8-03-02/bin/geos geos
 #cp /home/clf/Geos/geos-chem/GeosCore/geos geos
 
 #run #1
-time ./@EXECUTABLE > logm # time job; pipe output to log file 
-rm GCrunning
-touch GCdone
+    time ./@EXECUTABLE > logm # time job; pipe output to log file 
+    rm GCrunning
+    touch GCdone
+else
+    sleep 2
+fi
+done
 
 
 
