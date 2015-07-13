@@ -24,6 +24,7 @@ while [ ! -f STOP ]
 do
 if [ -f GO ]
 then
+    rm GO
     rm -f logm # clear pre-existing log files 
     rm GCdone
     touch GCrunning

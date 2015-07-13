@@ -19,6 +19,7 @@ while [ ! -f STOP ]
 do
 if [ -f GO ]
 then 
+    rm GO
     rm MGdone
     touch MGrunning
     mpirun -np 13 ./@EXECUTABLE
