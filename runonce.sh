@@ -20,9 +20,8 @@ module add intel
    setenv OMP_NUM_THREADS 8
 
 cd @RUNDIR # cd to your run dir
-while [ ! -f STOP ]
-do
-if [ -f GO ]
+while ([ ! -f STOP ])
+if ([ -f GO ])
 then
     rm GO
     rm -f logm # clear pre-existing log files 
@@ -39,7 +38,7 @@ then
 else
     sleep 2
 fi
-done
+end
 
 
 

@@ -15,9 +15,8 @@ setenv MPI_INC_DIR /home/software/intel/intel-2013_sp1.0.080/pkg/openmpi/openmpi
 setenv NETCDF_ROOT /home/software/intel/intel-2013_sp1.0.080/pkg/netcdf/netcdf-20130909/
 
 cd @RUNDIR
-while [ ! -f STOP ]
-do
-if [ -f GO ]
+while ([ ! -f STOP ])
+if ([ -f GO ])
 then 
     rm GO
     rm MGdone
@@ -28,6 +27,6 @@ then
 else
     sleep 2
 fi
-done
+end
 exit 0
 
