@@ -177,6 +177,7 @@ class Model(object):
         return
 
     def start_runscripts(self,):
+        print "RUNNING START_RUNSCRIPTS"
         self.rundir = os.path.join(self.rootdir,self.rundirname)
         if not os.path.exists(self.rundir):
             os.mkdir(self.rundir)
