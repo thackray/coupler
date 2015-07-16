@@ -32,5 +32,6 @@ if ( -e GO ) then
     touch GCdone
 else
     sleep 2
+endif
 end
 exit(0) # exit normally

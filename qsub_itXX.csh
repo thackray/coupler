@@ -25,6 +25,7 @@ if ( -e GO ) then
     touch MGdone
 else
     sleep 2
+endif
 end
 exit 0
 
