@@ -5,7 +5,7 @@
 #PBS -N pops_test
 #PBS -l nodes=1:ppn=8
 #PBS -j oe
-#PBS -q medium
+#PBS -q xlong
 #PBS -M thackray@mit.edu
 
 
