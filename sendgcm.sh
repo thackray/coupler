@@ -1,5 +1,5 @@
 #!/bin/csh
-#PBS -q short
+#PBS -q xlong
 source /etc/profile.d/modules.csh
 
 module add matlab
