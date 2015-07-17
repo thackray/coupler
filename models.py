@@ -32,8 +32,8 @@ def cd(destination):
 def submit(scriptname):
     return os.system('qsub '+scriptname)
 
-def submit_prequeued(pathname):
-    os.system('touch '+os.path.join(pathname,'GO'))
+def submit_prequeued(pathname, code='GO'):
+    os.system('touch '+os.path.join(pathname,code))
     return 
 
 def format_time(dtime,out_type='str',abststart=None):
@@ -243,10 +243,10 @@ class Model(object):
                                                   self.mat_share_script),
                                      {'@RUNDIR':self.rundir})
             cd(self.rundir)
-            submit(os.path.join(self.rundir,self.mat_share_script))
+            submit_prequeued(self.rundir,code='SEND'))
             cd(self.rootdir)
             while not check_state(self.rundir,self.sending_tag):
-                time.sleep(2)
+                time.sleep(5)
             while not check_state(self.rundir,self.sent_tag):
                 time.sleep(5)
 #            for outputname in self.mat_output_files: 
