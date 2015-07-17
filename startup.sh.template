@@ -1,0 +1,5 @@
+qsub @INSTALLPATH/MITgcm/verification/global_pcb_llc90/run/qsub_itXX.csh
+qsub @INSTALLPATH/MITgcm/verification/global_pcb_llc90/run/sendgcm.sh
+qsub @INSTALLPATH/GEOS-Chem/run/runonce.sh
+qsub @INSTALLPATH/GEOS-Chem/run/sendgeos.sh
+#qsub @INSTALLPATH/example.sh
