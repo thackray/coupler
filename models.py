@@ -93,21 +93,14 @@ class Model(object):
         self.name = modelinfo['Name']
         self.rootdir = modelinfo['rootdir']
         self.shared_dir = os.path.join(self.rootdir,'shared')
-        self.done_tag = modelinfo['done_tag']
-        self.running_tag = modelinfo['running_tag']
-        self.error_tag = modelinfo['error_tag']
-        self.sending_tag = modelinfo['sending_tag']
-        self.sent_tag = modelinfo['sent_tag']
         self.in_from = modelinfo['in_from']
         self.out_for = modelinfo['out_for']
-        self.runscript = modelinfo['runscript']
         self.input_files = modelinfo['input_files']
         self.files_to_copy = modelinfo['files_to_copy']
         self.share_script = modelinfo['share_script']
         self.mat_share_script = modelinfo['mat_share_script']
         self.mat_output_files = modelinfo['mat_output_files']
         self.rundirname = modelinfo['rundirname']
-        self.executable = modelinfo['executable']
         self.abststart = None
 
     def _do_more_init(self,):
@@ -129,18 +122,6 @@ class Model(object):
         for fil in self.files_to_copy:
             if not os.path.exists(os.path.join(self.rundir,fil)):
                 cp(fil, os.path.join(self.rundir,fil))
-        return
-
-    def start_runscripts(self,):
-        self.rundir = os.path.join(self.rootdir,self.rundirname)
-        if not os.path.exists(self.rundir):
-            os.mkdir(self.rundir)
-        self._make_runscript(self.runscript,
-                             os.path.join(self.rundir,
-                                          os.path.basename(self.runscript)))
-        cd(self.rundir)
-        submit(self.runscript)
-        cd(self.homedir)
         return
         
     def send_output(self, shared_dir):
@@ -200,9 +181,9 @@ class Model(object):
             cd(self.rundir)
             submit_prequeued(self.rundir,code='SEND'))
             cd(self.rootdir)
-            while not check_state(self.rundir,self.sending_tag):
+            while not check_state(self.rundir,'SENDING'):
                 time.sleep(5)
-            while not check_state(self.rundir,self.sent_tag):
+            while not check_state(self.rundir,'SENT'):
                 time.sleep(5)
 #            for outputname in self.mat_output_files: 
 #                cp(outputname,os.path.join(localdirname,outputname))
@@ -310,24 +291,3 @@ class MITgcm(Model):
         self._make_from_template(template, destination, fill_dict)
         return
  
-class DummyM(Model):
-    """Was using this for building the general coupling stuff."""
-    def _make_shared_files(self,):
-        for for_model in self.out_for:
-            dirname = '%s_to_%s'%(self.name,for_model)
-            localdirname = os.path.join(self.rundir,dirname)
-            os.mkdir(localdirname)
-        # needs to make the dir name_to_for_model, fill it
-        pass
-
-    def _make_input_file(self, template, destination):
-        cp(template, destination)
-        return
-
-    def _make_runscript(self, template, destination, ):
-        fill_dict = {'@RUNDIR':self.rundir}
-        self._make_from_template(template, destination, fill_dict)
-        return
-
-   
-
