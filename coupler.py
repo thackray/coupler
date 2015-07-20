@@ -64,7 +64,7 @@ class Coupler(object):
             while not DONE:
                 DONE = True
                 for model in self.models:
-                    DONE *= check_state(model.rundir, model.done_tag)
+                    DONE *= check_state(model.rundir, 'DONE')
                 time.sleep(self.check_frequency)
             self._swap_info()
             self.tcurrent = self.tnext
@@ -91,7 +91,7 @@ class Coupler(object):
             for model in self.models:
                 if not isrunning[model]:
                     isrunning[model] = check_state(model.rundir, 
-                                                   model.running_tag) 
+                                                   'RUNNING') 
                 RUNNING *= isrunning[model]
             time.sleep(self.check_frequency)
         return
@@ -108,14 +108,4 @@ class Coupler(object):
         print "All Done! Thanks for using coupler.py"
         return
 
-
-if __name__=='__main__':
-    from models import GEOSChem, MITgcm
-    from testing import GCinfo, MGinfo
-    G = GEOSChem(GCinfo)
-    M = MITgcm(MGinfo)
-    start_time, end_time = 0,12
-    step = 1
-    coupled = Coupler(start_time, end_time, step, model_objs=[G,M])
-    coupled.run()
 
