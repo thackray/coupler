@@ -48,7 +48,6 @@ class Coupler(object):
         # then make subdir for model to/froms
         for model in self.models:
             model.init_shared(self.shared_dir)
-            model.start_runscripts()
         # check for necessary templates from models
         return
 
