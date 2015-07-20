@@ -11,6 +11,8 @@ else:
 files_to_install = ['geossetup.sh.template','mitgcmsetup.sh.template',
                     'example.py.template', 'prepare_run_ecco_v4.template',
                     'prepare_run_input.template']
+files_to_install = [os.path.join('setup_templates',ff) for ff 
+                    in files_to_install]
 
 for fi in files_to_install:
     T = FileTemplate(fi.rstrip('template').rstrip('.'))
