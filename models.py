@@ -234,12 +234,6 @@ class GEOSChem(Model):
         self._make_from_template(template, destination, fill_dict)
         return
 
-    def _make_runscript(self, template, destination):
-        fill_dict = {'@RUNDIR':self.rundir,
-                     '@EXECUTABLE':self.executable,
-                     }
-        self._make_from_template(template, destination, fill_dict)
-        return
 
 class MITgcm(Model):
     """Child object for MITgcm specifically. Defines how MITgcm does the
@@ -284,10 +278,4 @@ class MITgcm(Model):
         self._make_from_template(template, destination, fill_dict)
         return
 
-    def _make_runscript(self, template, destination):
-        fill_dict = {'@RUNDIR':self.rundir,
-                     '@EXECUTABLE':self.executable,
-                     }
-        self._make_from_template(template, destination, fill_dict)
-        return
  
