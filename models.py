@@ -96,7 +96,6 @@ class Model(object):
         self.in_from = modelinfo['in_from']
         self.out_for = modelinfo['out_for']
         self.input_files = modelinfo['input_files']
-        self.files_to_copy = modelinfo['files_to_copy']
         self.share_script = modelinfo['share_script']
         self.mat_share_script = modelinfo['mat_share_script']
         self.mat_output_files = modelinfo['mat_output_files']
@@ -117,11 +116,8 @@ class Model(object):
         self.tend = tend
         self._do_more_init()
         for fil in self.input_files:
-            self._make_input_file(fil,os.path.join(self.rundir,fil))
-#        cp(self.executable,self.rundir)
-        for fil in self.files_to_copy:
-            if not os.path.exists(os.path.join(self.rundir,fil)):
-                cp(fil, os.path.join(self.rundir,fil))
+            self._make_input_file(os.path.join('templates',fil),
+                                  os.path.join(self.rundir,fil))
         return
         
     def send_output(self, shared_dir):
