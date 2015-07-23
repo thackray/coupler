@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 import os
 import time
 from coupler import check_state
+from templates import FileTemplate
 # Convenience functions to help make things easier to follow in the code. 
 
 def cp(origin, destination):
