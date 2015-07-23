@@ -10,7 +10,8 @@ else:
 
 files_to_install = ['geossetup.sh.template','mitgcmsetup.sh.template',
                     'example.py.template', 'prepare_run_ecco_v4.template',
-                    'prepare_run_input.template']
+                    'prepare_run_input.template','runonce.sh','qsub_itXX.csh',
+                    'sendgcm.sh','sendgeos.sh','startup.sh.template']
 template_location = [os.path.join('setup_templates',ff) for ff 
                     in files_to_install]
 
