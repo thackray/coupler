@@ -1,4 +1,4 @@
-from models import FileTemplate
+from templates import FileTemplate
 import os
 import sys
 
