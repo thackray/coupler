@@ -64,9 +64,6 @@ def put_a_three(date):
     return '\n'.join(template)
 
 
-
-            
-
 class Model(object):
     """Highest-level Model object for use in the Coupler class.
 
@@ -168,11 +165,13 @@ class Model(object):
             localdirname = os.path.join(self.rundir,dirname)
             if not os.path.exists(localdirname):
                 os.mkdir(localdirname)
-            self._make_from_template(self.share_script,
+            self._make_from_template(os.path.join('templates',
+                                                  self.share_script),
                                      os.path.join(self.rundir,
                                                   self.share_script),
                                      self._make_shared_dict())
-            self._make_from_template(self.mat_share_script, 
+            self._make_from_template(os.path.join('templates',
+                                                  self.mat_share_script), 
                                      os.path.join(self.rundir,
                                                   self.mat_share_script),
                                      {'@RUNDIR':self.rundir})
