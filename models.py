@@ -95,7 +95,6 @@ class Model(object):
         self.out_for = modelinfo['out_for']
         self.input_files = modelinfo['input_files']
         self.share_script = modelinfo['share_script']
-        self.mat_share_script = modelinfo['mat_share_script']
         self.mat_output_files = modelinfo['mat_output_files']
         self.rundirname = modelinfo['rundirname']
         self.abststart = None
@@ -170,11 +169,6 @@ class Model(object):
                                      os.path.join(self.rundir,
                                                   self.share_script),
                                      self._make_shared_dict())
-            self._make_from_template(os.path.join('templates',
-                                                  self.mat_share_script), 
-                                     os.path.join(self.rundir,
-                                                  self.mat_share_script),
-                                     {'@RUNDIR':self.rundir})
             cd(self.rundir)
             submit_prequeued(self.rundir,code='SEND')
             cd(self.rootdir)
