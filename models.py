@@ -101,6 +101,7 @@ class Model(object):
         self.mat_output_files = modelinfo['mat_output_files']
         self.rundirname = modelinfo['rundirname']
         self.abststart = None
+        self.rundir = os.path.join(self.rootdir,self.rundirname)
 
     def _do_more_init(self,):
         """Defined, if needed, in children"""
