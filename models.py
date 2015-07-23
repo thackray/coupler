@@ -32,8 +32,8 @@ def cd(destination):
 def submit(scriptname):
     return os.system('qsub '+scriptname)
 
-def submit_prequeued(pathname):
-    os.system('touch '+os.path.join(pathname,'GO'))
+def submit_prequeued(pathname, code='GO'):
+    os.system('touch '+os.path.join(pathname,code))
     return 
 
 def format_time(dtime,out_type='str',abststart=None):
@@ -163,23 +163,29 @@ class Model(object):
         """Do the general setup procedures. Procedures speific to the 
         individual models should not be defined here.
         """
-        self.rundir = os.path.join(self.rootdir,self.rundirname)
         if not self.abststart:
             self.abststart = tstart
         self.tstart = tstart
         self.tend = tend
         self._do_more_init()
-        if not os.path.exists(self.rundir):
-            os.mkdir(self.rundir)
         for fil in self.input_files:
             self._make_input_file(fil,os.path.join(self.rundir,fil))
 #        cp(self.executable,self.rundir)
-        self._make_runscript(self.runscript,
-                             os.path.join(self.rundir,
-                                          os.path.basename(self.runscript)))
         for fil in self.files_to_copy:
             if not os.path.exists(os.path.join(self.rundir,fil)):
                 cp(fil, os.path.join(self.rundir,fil))
+        return
+
+    def start_runscripts(self,):
+        self.rundir = os.path.join(self.rootdir,self.rundirname)
+        if not os.path.exists(self.rundir):
+            os.mkdir(self.rundir)
+        self._make_runscript(self.runscript,
+                             os.path.join(self.rundir,
+                                          os.path.basename(self.runscript)))
+        cd(self.rundir)
+        submit(self.runscript)
+        cd(self.homedir)
         return
         
     def send_output(self, shared_dir):
@@ -237,10 +243,10 @@ class Model(object):
                                                   self.mat_share_script),
                                      {'@RUNDIR':self.rundir})
             cd(self.rundir)
-            submit(os.path.join(self.rundir,self.mat_share_script))
+            submit_prequeued(self.rundir,code='SEND')
             cd(self.rootdir)
             while not check_state(self.rundir,self.sending_tag):
-                time.sleep(2)
+                time.sleep(5)
             while not check_state(self.rundir,self.sent_tag):
                 time.sleep(5)
 #            for outputname in self.mat_output_files: 
