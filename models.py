@@ -243,7 +243,7 @@ class Model(object):
                                                   self.mat_share_script),
                                      {'@RUNDIR':self.rundir})
             cd(self.rundir)
-            submit_prequeued(self.rundir,code='SEND'))
+            submit_prequeued(self.rundir,code='SEND')
             cd(self.rootdir)
             while not check_state(self.rundir,self.sending_tag):
                 time.sleep(5)
