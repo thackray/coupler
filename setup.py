@@ -10,7 +10,9 @@ else:
 
 files_to_install = ['geossetup.sh.template','mitgcmsetup.sh.template',
                     'example.py.template', 'prepare_run_ecco_v4.template',
-                    'prepare_run_input.template']
+                    'prepare_run_input.template', 'startup.sh.template',
+                    'qsub_itXX.csh', 'runonce.sh', 'sendgeos.sh', 
+                    'sendgcm.sh']
 
 for fi in files_to_install:
     T = FileTemplate(fi.rstrip('template').rstrip('.'))

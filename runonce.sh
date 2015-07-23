@@ -19,7 +19,7 @@ module add intel
    setenv KMP_STACKSIZE 209715200
    setenv OMP_NUM_THREADS 8
 
-cd @RUNDIR # cd to your run dir
+cd @INSTALLPATH/GEOS-Chem/run # cd to your run dir
 while ([ ! -f STOP ])
 if ([ -f GO ])
 then
@@ -32,7 +32,7 @@ then
 #cp /home/clf/Geos/geos-chem/GeosCore/geos geos
 
 #run #1
-    time ./@EXECUTABLE > logm # time job; pipe output to log file 
+    time ./@geos > logm # time job; pipe output to log file 
     rm GCrunning
     touch GCdone
 else

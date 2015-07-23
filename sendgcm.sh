@@ -3,7 +3,7 @@
 source /etc/profile.d/modules.csh
 
 module add matlab
-cd @RUNDIR
+cd @INSTALLPATH/MITgcm/verification/global_pcb_llc90/run
 rm MGsent
 touch MGsending
 matlab -nodesktop -nojvm -nodisplay -nosplash -r gcmtogeos -logfile gcmtogeos.log

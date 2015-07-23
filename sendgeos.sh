@@ -3,7 +3,7 @@
 source /etc/profile.d/modules.csh
 
 module add matlab
-cd @RUNDIR
+cd @INSTALLPATH/GEOS-Chem/run
 rm GCsent
 touch GCsending
 matlab -nodesktop -nojvm -nodisplay -nosplash -r geostogcm -logfile geostogcm.log
