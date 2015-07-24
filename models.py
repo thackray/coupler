@@ -187,6 +187,12 @@ class Model(object):
         #submit(self.runscript)
         submit_prequeued(self.rundir)
         cd(self.homedir)
+        return
+
+    def stop(self,):
+        """Stop the model job."""
+        submit_prequeued(self.rundir,code='STOP')
+        return
 
 class GEOSChem(Model):
     """Child object for GEOSChem specifically. Defines how GEOSChem does the

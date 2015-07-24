@@ -104,6 +104,8 @@ class Coupler(object):
 
     def _cleanup(self, ):
         """Submit the cleanup job to group the outputs, remove temps, etc."""  
+        for model in self.models:
+            model.stop()
         print "All Done! Thanks for using coupler.py"
         return
 
