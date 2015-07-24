@@ -2,7 +2,7 @@
 ## PBS directives 
 ## nb, PBS directives begin '#PBS'
 
-#PBS -N pops_test
+#PBS -N GEOS-Chem
 #PBS -l nodes=1:ppn=8
 #PBS -j oe
 #PBS -q xlong

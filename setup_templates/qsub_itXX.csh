@@ -1,7 +1,7 @@
 #!/bin/csh -f
 #
 #PBS -l nodes=13:sandy
-#PBS -N test_mitgcm
+#PBS -N MITgcm
 #PBS -j oe
 #PBS -q xlong
 source /etc/profile.d/modules.csh
