@@ -6,7 +6,6 @@
 #PBS -l nodes=1:ppn=8
 #PBS -j oe
 #PBS -q xlong
-#PBS -M thackray@mit.edu
 
 
 
