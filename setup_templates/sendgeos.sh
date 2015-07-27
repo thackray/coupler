@@ -1,4 +1,5 @@
 #!/bin/csh -f
+#PBS -l nodes=1
 #PBS -q xlong
 source /etc/profile.d/modules.csh
 
