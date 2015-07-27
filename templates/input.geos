@@ -119,7 +119,7 @@ POP type [PHE, PCB028]  : PCB028
 Surface fluxes?         : T
 Surface restart file    : surf.pops.YYYYMMDDhh
 Dummy logical           : T
-POPs emiss file         : /home/clf/Geos/GEOS-Chem.v9-01-03_wPAHs/28_oce100mMERRA_fromspin/2000/PCB28_HIGH_2000.4x5.bpch
+POPs emiss file         : /net/fs03/d1/clf/scratch_disk_overflow/GEOS-Chem.v9-01-03_wPAHs/28_oce100mMERRA_fromspin/2000/PCB28_HIGH_2000.4x5.bpch
 POP_XMW                 : 257.54d-3  
 POP_KOA                 : 7.24d7 
 POP_KBC                 : 7.24d7 
