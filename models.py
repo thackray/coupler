@@ -261,7 +261,7 @@ class MITgcm(Model):
                      '@STARTTIME':str(int(format_time(self.tstart,
                                                       'MG',self.abststart))+1),
                      '@TIMESTEP':str(int(format_time(self.tend,
-                                                 'MG',self.tstart))),
+                                                     'MG',self.tstart))+2),
                      '@HOURTIMESTEP':str(int(format_time(self.tend,
                                                  'MG',self.tstart))*3600),
                      '@PICKUPSTEP':str(int(format_time(self.tend,
