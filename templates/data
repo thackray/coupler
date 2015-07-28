@@ -105,7 +105,7 @@ nTimeSteps=@TIMESTEP,
  pChkptFreq  =@PICKUPSTEP,
 # 31557600 is one year
 # 2629800 is 1 month
- chkptFreq   = 31557600.0,
+ chkptFreq   = @PICKUPSTEP,
  taveFreq    =   31557600.0,
  dumpFreq    = 3155760000.0,
 # monitorFreq = 7200.0,
