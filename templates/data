@@ -102,12 +102,12 @@ nTimeSteps=@TIMESTEP,
  alph_AB=0.5,
  beta_AB=0.281105,
 #
- pChkptFreq  =@PICKUPSTEP,
+ pChkptFreq  =@PICKUPSTEP.,
 # 31557600 is one year
 # 2629800 is 1 month
- chkptFreq   = @PICKUPSTEP,
- taveFreq    = @PICKUPSTEP,
- dumpFreq    = @PICKUPSTEP,
+ chkptFreq   = @PICKUPSTEP.,
+ taveFreq    = @PICKUPSTEP.,
+ dumpFreq    = @PICKUPSTEP.,
 # monitorFreq = 7200.0,
  monitorFreq = 864000.0,
  dumpInitAndLast = .TRUE.,

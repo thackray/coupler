@@ -64,7 +64,7 @@
 #  2628000 sec =  30 days - 1 month
 # 31536000 sec = 365 days - 1 yr
 #
-   frequency(1:19) = 19*@HOURTIMESTEP,
+   frequency(1:19) = 19*@HOURTIMESTEP.,
 
    fields(1,1) = 'PCBaCONC',
    filename(1) = 'diags/PCBaCONC',
