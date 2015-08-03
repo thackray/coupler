@@ -1,7 +1,7 @@
 #!/bin/csh
 #
 #PBS -l nodes=13:sandy
-#PBS -N test_mitgcm
+#PBS -N MITgcm
 #PBS -j oe
 #PBS -q xlong
 source /etc/profile.d/modules.csh
@@ -15,15 +15,14 @@ setenv MPI_INC_DIR /home/software/intel/intel-2013_sp1.0.080/pkg/openmpi/openmpi
 setenv NETCDF_ROOT /home/software/intel/intel-2013_sp1.0.080/pkg/netcdf/netcdf-20130909/
 
 cd @INSTALLPATH/MITgcm/verification/global_pcb_llc90/run
-while ([ ! -f STOP ])
-if ([ -f GO ])
-then 
+while ( ! -e STOP )
+if ( -e GO ) then 
     rm GO
-    rm MGdone
-    touch MGrunning
+    rm DONE
+    touch RUNNING
     mpirun -np 13 ./mitgcmuv
-    rm MGrunning
-    touch MGdone
+    rm RUNNING
+    touch DONE
 else
     sleep 2
 fi

@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 import os
 import time
 from coupler import check_state
+from templates import FileTemplate
 # Convenience functions to help make things easier to follow in the code. 
 
 def cp(origin, destination):
@@ -63,54 +64,6 @@ def put_a_three(date):
     return '\n'.join(template)
 
 
-
-class FileTemplate(object):
-    """Governs the reading and filling of file templates.
-    Arguments:
-       - filename: name of file that will eventually be written to
-
-    Methods:
-       - load_template: load given template for filling
-       - fill_template: fill template using dictionary of fillers
-       - set_value: replace a single tag with a filler
-       - write: save file with previously defined replacements
-    """
-
-    def __init__(self, filename):
-        "Save filename to write to and initialize content."
-        self.filename = filename
-        self.content = ''
-        return
-
-    def load_template(self, template_path):
-        "Load template from given path to memory to be filled"
-        with open(template_path, 'r') as f:
-            self.content = f.read()
-        return
-
-    def set_value(self, tag, value):
-        """Replace tag in template with value. 
-        e.g. set_value('@USERNAME','thackray')
-        """
-        self.content = self.content.replace(tag, value)
-        return
-
-    def fill_template(self, fill_dict):
-        """Take a dictionary of tag:value pairs and use them to fill template"""
-        for tag in fill_dict:
-            self.set_value(tag, fill_dict[tag])
-        return
-
-    def write(self, newfilename=None):
-        """Save filled template to location newfilename. If newfilename is not
-        given, save to location given in object initilization.
-        """
-        if newfilename:
-            self.filename = newfilename
-        with open(self.filename, 'w') as f:
-            f.write(self.content)
-            
-
 class Model(object):
     """Highest-level Model object for use in the Coupler class.
 
@@ -138,22 +91,14 @@ class Model(object):
         self.name = modelinfo['Name']
         self.rootdir = modelinfo['rootdir']
         self.shared_dir = os.path.join(self.rootdir,'shared')
-        self.done_tag = modelinfo['done_tag']
-        self.running_tag = modelinfo['running_tag']
-        self.error_tag = modelinfo['error_tag']
-        self.sending_tag = modelinfo['sending_tag']
-        self.sent_tag = modelinfo['sent_tag']
         self.in_from = modelinfo['in_from']
         self.out_for = modelinfo['out_for']
-        self.runscript = modelinfo['runscript']
         self.input_files = modelinfo['input_files']
-        self.files_to_copy = modelinfo['files_to_copy']
         self.share_script = modelinfo['share_script']
-        self.mat_share_script = modelinfo['mat_share_script']
         self.mat_output_files = modelinfo['mat_output_files']
         self.rundirname = modelinfo['rundirname']
-        self.executable = modelinfo['executable']
         self.abststart = None
+        self.rundir = os.path.join(self.rootdir,self.rundirname)
 
     def _do_more_init(self,):
         """Defined, if needed, in children"""
@@ -169,23 +114,8 @@ class Model(object):
         self.tend = tend
         self._do_more_init()
         for fil in self.input_files:
-            self._make_input_file(fil,os.path.join(self.rundir,fil))
-#        cp(self.executable,self.rundir)
-        for fil in self.files_to_copy:
-            if not os.path.exists(os.path.join(self.rundir,fil)):
-                cp(fil, os.path.join(self.rundir,fil))
-        return
-
-    def start_runscripts(self,):
-        self.rundir = os.path.join(self.rootdir,self.rundirname)
-        if not os.path.exists(self.rundir):
-            os.mkdir(self.rundir)
-        self._make_runscript(self.runscript,
-                             os.path.join(self.rundir,
-                                          os.path.basename(self.runscript)))
-        cd(self.rundir)
-        submit(self.runscript)
-        cd(self.homedir)
+            self._make_input_file(os.path.join('templates',fil),
+                                  os.path.join(self.rundir,fil))
         return
         
     def send_output(self, shared_dir):
@@ -234,20 +164,17 @@ class Model(object):
             localdirname = os.path.join(self.rundir,dirname)
             if not os.path.exists(localdirname):
                 os.mkdir(localdirname)
-            self._make_from_template(self.share_script,
+            self._make_from_template(os.path.join('templates',
+                                                  self.share_script),
                                      os.path.join(self.rundir,
                                                   self.share_script),
                                      self._make_shared_dict())
-            self._make_from_template(self.mat_share_script, 
-                                     os.path.join(self.rundir,
-                                                  self.mat_share_script),
-                                     {'@RUNDIR':self.rundir})
             cd(self.rundir)
             submit_prequeued(self.rundir,code='SEND')
             cd(self.rootdir)
-            while not check_state(self.rundir,self.sending_tag):
+            while not check_state(self.rundir,'SENDING'):
                 time.sleep(5)
-            while not check_state(self.rundir,self.sent_tag):
+            while not check_state(self.rundir,'SENT'):
                 time.sleep(5)
 #            for outputname in self.mat_output_files: 
 #                cp(outputname,os.path.join(localdirname,outputname))
@@ -260,6 +187,12 @@ class Model(object):
         #submit(self.runscript)
         submit_prequeued(self.rundir)
         cd(self.homedir)
+        return
+
+    def stop(self,):
+        """Stop the model job."""
+        submit_prequeued(self.rundir,code='STOP')
+        return
 
 class GEOSChem(Model):
     """Child object for GEOSChem specifically. Defines how GEOSChem does the
@@ -298,12 +231,6 @@ class GEOSChem(Model):
         self._make_from_template(template, destination, fill_dict)
         return
 
-    def _make_runscript(self, template, destination):
-        fill_dict = {'@RUNDIR':self.rundir,
-                     '@EXECUTABLE':self.executable,
-                     }
-        self._make_from_template(template, destination, fill_dict)
-        return
 
 class MITgcm(Model):
     """Child object for MITgcm specifically. Defines how MITgcm does the
@@ -334,7 +261,7 @@ class MITgcm(Model):
                      '@STARTTIME':str(int(format_time(self.tstart,
                                                       'MG',self.abststart))+1),
                      '@TIMESTEP':str(int(format_time(self.tend,
-                                                 'MG',self.tstart))),
+                                                     'MG',self.tstart))+2),
                      '@DIAGTIMESTEP':str(int(format_time(self.tend,
                                                  'MG',self.tstart))*3600),
                      '@PICKUPSTEP':str(int(format_time(self.tend,
@@ -348,31 +275,4 @@ class MITgcm(Model):
         self._make_from_template(template, destination, fill_dict)
         return
 
-    def _make_runscript(self, template, destination):
-        fill_dict = {'@RUNDIR':self.rundir,
-                     '@EXECUTABLE':self.executable,
-                     }
-        self._make_from_template(template, destination, fill_dict)
-        return
  
-class DummyM(Model):
-    """Was using this for building the general coupling stuff."""
-    def _make_shared_files(self,):
-        for for_model in self.out_for:
-            dirname = '%s_to_%s'%(self.name,for_model)
-            localdirname = os.path.join(self.rundir,dirname)
-            os.mkdir(localdirname)
-        # needs to make the dir name_to_for_model, fill it
-        pass
-
-    def _make_input_file(self, template, destination):
-        cp(template, destination)
-        return
-
-    def _make_runscript(self, template, destination, ):
-        fill_dict = {'@RUNDIR':self.rundir}
-        self._make_from_template(template, destination, fill_dict)
-        return
-
-   
-

@@ -1,11 +1,10 @@
 ## PBS directives 
 ## nb, PBS directives begin '#PBS'
 
-#PBS -N pops_test
+#PBS -N GEOS-Chem
 #PBS -l nodes=1:ppn=8
 #PBS -j oe
-#PBS -q medium
-#PBS -M thackray@mit.edu
+#PBS -q xlong
 
 
 
@@ -20,21 +19,15 @@ module add intel
    setenv OMP_NUM_THREADS 8
 
 cd @INSTALLPATH/GEOS-Chem/run # cd to your run dir
-while ([ ! -f STOP ])
-if ([ -f GO ])
-then
+while ( ! -e STOP )
+if ( -e GO ) then
     rm GO
     rm -f logm # clear pre-existing log files 
-    rm GCdone
-    touch GCrunning
-# copy geos into run dir
-#cp /home/selin/geoschem/GEOS-Chem.v8-03-02/Code.v8-03-02/bin/geos geos
-#cp /home/clf/Geos/geos-chem/GeosCore/geos geos
-
-#run #1
-    time ./@geos > logm # time job; pipe output to log file 
-    rm GCrunning
-    touch GCdone
+    rm DONE
+    touch RUNNING
+    time ./geos > logm # time job; pipe output to log file 
+    rm RUNNING
+    touch DONE
 else
     sleep 2
 fi

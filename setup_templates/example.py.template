@@ -1,42 +1,25 @@
 
 GCinfo = {'Name':'GEOS-Chem',
           'rootdir':'@INSTALLPATH',
-          'done_tag':'GCdone',
-          'running_tag':'GCrunning',
-          'error_tag':'GCerror',
-	  'sending_tag':'GCsending',
-	  'sent_tag':'GCsent',
           'in_from':['MITgcm'],
           'out_for':['MITgcm'],
-          'runscript':'runonce.sh',
-          'input_files':['input.geos'],
-	  'files_to_copy':['regrid_dep_ll2llc.m','GC_gridinfo.m',
+          'input_files':['input.geos','regrid_dep_ll2llc.m','GC_gridinfo.m',
 			   'areas_4x5_m2.dat'],
           'share_script':'geostogcm.m',
-          'mat_share_script':'sendgeos.sh',
           'mat_output_files':['gasdep_llc90.bin','partdep_llc90.bin',
                               'popgconc_llc90.bin'],
           'rundirname':'GEOS-Chem/run',
-          'executable':'geos',
           }
 
 MGinfo = {'Name':'MITgcm',
           'rootdir':'@INSTALLPATH',
-          'done_tag':'MGdone',
-          'running_tag':'MGrunning',
-          'error_tag':'MGerror',
-	  'sending_tag':'MGsending',
-	  'sent_tag':'MGsent',
           'in_from':['GEOS-Chem'],
           'out_for':['GEOS-Chem'],
-          'runscript':'qsub_itXX.csh',
-	  'input_files':['data','data.pcb','data.diagnostics'],
-	  'files_to_copy':['regrid_evas_llc2ll.m'],
+	  'input_files':['data','data.pcb','data.diagnostics',
+                         'regrid_evas_llc2ll.m'],
           'share_script':'gcmtogeos.m',
-          'mat_share_script':'sendgcm.sh',
           'mat_output_files':['evasion_latlon.nc'],
           'rundirname':'MITgcm/verification/global_pcb_llc90/run',
-          'executable':'mitgcmuv',
           }
 
 from models import GEOSChem, MITgcm
@@ -45,9 +28,9 @@ from datetime import datetime
 
 M1 = GEOSChem(GCinfo)
 M2 = MITgcm(MGinfo)
-start_time, end_time = datetime(2000,1,1,0),datetime(2000,1,7,0)
-step = 2*24
+start_time, end_time = datetime(2000,1,1,0),datetime(2001,1,1,0)
+step = 28*24
 coupled = Coupler(start_time, end_time, step, model_objs=[M1,M2], 
-                  check_frequency=5)
+                  check_frequency=10)
 coupled.startup()
 coupled.run()
