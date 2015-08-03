@@ -1,4 +1,3 @@
-#!/bin/csh -f
 ## PBS directives 
 ## nb, PBS directives begin '#PBS'
 
@@ -31,6 +30,9 @@ if ( -e GO ) then
     touch DONE
 else
     sleep 2
-endif
+fi
 end
+
+
+
 exit(0) # exit normally

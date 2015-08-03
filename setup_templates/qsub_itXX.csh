@@ -1,4 +1,4 @@
-#!/bin/csh -f
+#!/bin/csh
 #
 #PBS -l nodes=13:sandy
 #PBS -N MITgcm
@@ -25,7 +25,7 @@ if ( -e GO ) then
     touch DONE
 else
     sleep 2
-endif
+fi
 end
 exit 0
 
