@@ -1,3 +1,4 @@
+#!/bin/csh
 ## PBS directives 
 ## nb, PBS directives begin '#PBS'
 
