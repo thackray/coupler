@@ -25,7 +25,7 @@ if ( -e GO ) then
     touch DONE
 else
     sleep 2
-fi
+endif
 end
 exit 0
 
