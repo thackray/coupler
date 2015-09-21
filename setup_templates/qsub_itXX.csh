@@ -27,5 +27,9 @@ else
     sleep 2
 endif
 end
+
+sleep 60
+rm STOP
+
 exit 0
 

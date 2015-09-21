@@ -34,6 +34,7 @@ else
 endif
 end
 
-
+sleep 60
+rm STOP
 
 exit(0) # exit normally
