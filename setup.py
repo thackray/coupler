@@ -4,8 +4,9 @@ import sys
 
 MODE = 'DEFAULT'
 installdir = os.getcwd()
-if len(sys.argv) > 2:
-    if sys.argv[2] in ['--sandy', '-sandy','-s']:
+
+if len(sys.argv) > 1:
+    if sys.argv[1] in ['--sandy', '-sandy','-s']:
         MODE = 'SANDY'
 
 files_to_install = ['geossetup.sh.template','mitgcmsetup.sh.template',
