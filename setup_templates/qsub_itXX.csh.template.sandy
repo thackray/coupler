@@ -1,6 +1,6 @@
 #!/bin/csh
 #
-#PBS -l nodes=13
+#PBS -l nodes=96:sandy
 #PBS -N MITgcm
 #PBS -j oe
 #PBS -q xlong
@@ -20,7 +20,7 @@ if ( -e GO ) then
     rm GO
     rm DONE
     touch RUNNING
-    mpirun -np 13 ./mitgcmuv
+    mpirun -np 96 ./mitgcmuv
     rm RUNNING
     touch DONE
 else
