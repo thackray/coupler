@@ -42,6 +42,7 @@ The coupler code is broken into a few tiers:
 Steps to run:
 1. Clone this repository
 2. python setup.py (ssh to a file server first)
+2. (alternate) python setup.py --sandy (for 96 core sandy MITgcm)
 3. run startup.sh (this grabs nodes for your 4 jobs)
 3. python example.py (or, if you're worried about broken pipes, submit 
    	  	     	  subcoupler.sh to the queue.)
