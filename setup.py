@@ -31,6 +31,7 @@ for fi,loc in zip(files_to_install,template_locations):
     T.set_value('@INSTALLPATH',installdir)
     T.write()
 
+print "setup mode: %s"%MODE
 os.system('chmod +x mitgcmsetup.sh')
 os.system('chmod +x geossetup.sh')
 os.system('./mitgcmsetup.sh')
