@@ -22,7 +22,12 @@ if ( -e GO ) then
     touch RUNNING
     mpirun -np 96 ./mitgcmuv
     rm RUNNING
-    touch DONE
+    if (`tail -n 1 STDOUT.0000` == "PROGRAM MAIN: Execution ended Normally") then
+        touch DONE
+    else
+	touch STOP
+    touch ../../../../GEOS-Chem/run/STOP
+    endif
 else
     sleep 2
 endif

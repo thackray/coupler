@@ -28,7 +28,12 @@ if ( -e GO ) then
     touch RUNNING
     time ./geos > logm # time job; pipe output to log file 
     rm RUNNING
-    touch DONE
+    if (`tail -n 1 logm` == "************** E N D O F G E O S -- C H E M **************") then
+	touch DONE
+    else
+	touch STOP
+	touch ../../MITgcm/verification/global_pcb_llc90/run/STOP
+    endif
 else
     sleep 2
 endif
