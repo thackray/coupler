@@ -46,8 +46,7 @@ class Coupler(object):
         if not os.path.exists(self.shared_dir):
             os.mkdir(self.shared_dir)
         # then make subdir for model to/froms
-        for model in self.models:
-            model.init_shared(self.shared_dir)
+        for model in self.models:            model.init_shared(self.shared_dir)
         # check for necessary templates from models
         return
 
@@ -56,12 +55,16 @@ class Coupler(object):
         self.tcurrent = self.tstart
         while (self.tcurrent < self.tend) and not check_state(self.models[0].rundir,
                                                           'STOP'):
+            print check_state(self.models[0].rundir,
+                                                          'STOP')
             print self.tcurrent
             self.tnext = self.tcurrent + self.dt
             self._prep_models(self.tcurrent, self.tnext)
             self._run_models()
             DONE = False
             while not DONE and not check_state(self.models[0].rundir,'STOP'):
+                print check_state(self.models[0].rundir,
+                                                          'STOP')
                 DONE = True
                 for model in self.models:
                     DONE *= check_state(model.rundir, 'DONE')
@@ -86,7 +89,7 @@ class Coupler(object):
         isrunning = {}
         for model in self.models:
             isrunning[model] = False
-        while not RUNNING:
+        while not RUNNING and not check_state(self.models[0].rundir,'STOP'):
             RUNNING = True
             for model in self.models:
                 if not isrunning[model]:
