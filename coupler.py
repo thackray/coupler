@@ -54,7 +54,8 @@ class Coupler(object):
     def run(self, ):
         """Run the coupled models."""
         self.tcurrent = self.tstart
-        while self.tcurrent < self.tend:
+        while (self.tcurrent < self.tend) and not check_state(models[0].rundir,
+                                                          'STOP'):
             print self.tcurrent
             self.tnext = self.tcurrent + self.dt
             self._prep_models(self.tcurrent, self.tnext)
