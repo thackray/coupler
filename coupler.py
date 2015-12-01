@@ -61,7 +61,7 @@ class Coupler(object):
             self._prep_models(self.tcurrent, self.tnext)
             self._run_models()
             DONE = False
-            while not DONE:
+            while not DONE and not check_state(self.models[0].rundir,'STOP'):
                 DONE = True
                 for model in self.models:
                     DONE *= check_state(model.rundir, 'DONE')
