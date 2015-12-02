@@ -172,9 +172,11 @@ class Model(object):
             cd(self.rundir)
             submit_prequeued(self.rundir,code='SEND')
             cd(self.rootdir)
-            while not check_state(self.rundir,'SENDING'):
+            while (not check_state(self.rundir,'SENDING')) and \
+                  (not check_state(self.rundir,'STOP')):
                 time.sleep(1)
-            while not check_state(self.rundir,'SENT'):
+            while (not check_state(self.rundir,'SENT')) and \
+                  (not check_state(self.rundir,'STOP')):
                 time.sleep(5)
 #            for outputname in self.mat_output_files: 
 #                cp(outputname,os.path.join(localdirname,outputname))
