@@ -54,17 +54,13 @@ class Coupler(object):
         """Run the coupled models."""
         self.tcurrent = self.tstart
         while (self.tcurrent < self.tend) and not check_state(self.models[0].rundir,
-                                                          'STOP'):
-            print check_state(self.models[0].rundir,
-                                                          'STOP')
+                                                          'ERROR'):
             print self.tcurrent
             self.tnext = self.tcurrent + self.dt
             self._prep_models(self.tcurrent, self.tnext)
             self._run_models()
             DONE = False
-            while not DONE and not check_state(self.models[0].rundir,'STOP'):
-                print check_state(self.models[0].rundir,
-                                                          'STOP')
+            while not DONE and not check_state(self.models[0].rundir,'ERROR'):
                 DONE = True
                 for model in self.models:
                     DONE *= check_state(model.rundir, 'DONE')
@@ -89,7 +85,7 @@ class Coupler(object):
         isrunning = {}
         for model in self.models:
             isrunning[model] = False
-        while not RUNNING and not check_state(self.models[0].rundir,'STOP'):
+        while not RUNNING and not check_state(self.models[0].rundir,'ERROR'):
             RUNNING = True
             for model in self.models:
                 if not isrunning[model]:

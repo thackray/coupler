@@ -20,7 +20,7 @@ module add intel
    setenv OMP_NUM_THREADS 8
 
 cd @INSTALLPATH/GEOS-Chem/run # cd to your run dir
-while ( ! -e STOP )
+while (( ! -e STOP ) && ( ! -e ERROR ))
 if ( -e GO ) then
     rm GO
     rm -f logm # clear pre-existing log files 
@@ -31,8 +31,8 @@ if ( -e GO ) then
     if (`tail -n 1 logm` == "************** E N D O F G E O S -- C H E M **************") then
 	touch DONE
     else
-	touch STOP
-	touch ../../MITgcm/verification/global_pcb_llc90/run/STOP
+	touch ERROR
+	touch ../../MITgcm/verification/global_pcb_llc90/run/ERROR
     endif
 else
     sleep 2
