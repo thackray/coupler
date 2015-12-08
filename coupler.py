@@ -104,9 +104,14 @@ class Coupler(object):
 
     def _cleanup(self, ):
         """Submit the cleanup job to group the outputs, remove temps, etc."""  
+        ERROR = False
         for model in self.models:
             model.stop()
-        print "All Done! Thanks for using coupler.py"
+            ERROR += check_state(model.rundir,'ERROR')
+        if ERROR:
+            print "An ERROR occured in one or both of the models"
+        else:
+            print "All Done! Thanks for using coupler.py"
         return
 
 
