@@ -1,9 +1,9 @@
 #!/bin/tcsh
 cd @INSTALLPATH
-echo "Waiting for errors to clean up..."
+echo 'Waiting for errors to clean up...'
 while (( ! -e GEOS-Chem/run/ERROR ) && ( ! -e GEOS-Chem/run/STOP ))
     sleep 10
-    echo "."
+    echo -n '.'
 end
 if ( -e GEOS-Chem/run/ERROR ) then
     foreach job (`cat JOBIDS`)
