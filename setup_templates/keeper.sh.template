@@ -1,0 +1,13 @@
+#!/bin/tcsh
+cd @INSTALLPATH
+while (( ! -e GEOS-Chem/run/ERROR ) && ( ! -e GEOS-Chem/run/STOP ))
+    sleep 10
+end
+if ( -e GEOS-Chem/run/ERROR ) then
+    foreach job (`cat JOBIDS`)
+	set id = ($job:as/./ /)
+	qdel $id[1]
+    end
+endif
+exit 0
+
