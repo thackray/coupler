@@ -6,6 +6,7 @@ while (( ! -e GEOS-Chem/run/ERROR ) && ( ! -e GEOS-Chem/run/STOP ))
     echo -n '.'
 end
 if ( -e GEOS-Chem/run/ERROR ) then
+    echo 'ERROR Found! Killing jobs'
     foreach job (`cat JOBIDS`)
 	set id = ($job:as/./ /)
 	qdel $id[1]
