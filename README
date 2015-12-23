@@ -44,8 +44,10 @@ Steps to run:
 2. python setup.py (ssh to a file server first)
 2. (alternate) python setup.py --sandy (for 96 core sandy MITgcm)
 3. run startup.sh (this grabs nodes for your 4 jobs)
-3. python example.py (or, if you're worried about broken pipes, submit 
+4. python example.py (or, if you're worried about broken pipes, submit 
    	  	     	  subcoupler.sh to the queue.)
+5. ./keeper.sh (this waits for errors and kills the jobs on the held nodes)
+
 If these steps work, you should be able to make scripts like example.py which
 will do the running that you want them to, if you also tweak the model run dirs
 appropriately (give them the initial conditions they need, etc.)
